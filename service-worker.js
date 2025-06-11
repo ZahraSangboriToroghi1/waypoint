@@ -1,15 +1,15 @@
 const CACHE_NAME = 'waypoint-cache-v1';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/dashboard.html',
-  '/editor.html',
-  '/gallery.html',
-  '/integrations.html',
-  '/profile.html',
-  '/settings.html',
-  '/style.css',
-  '/script.js',
+  '/waypoint/',
+  '/waypoint/index.html',
+  '/waypoint/dashboard.html',
+  '/waypoint/editor.html',
+  '/waypoint/gallery.html',
+  '/waypoint/integrations.html',
+  '/waypoint/profile.html',
+  '/waypoint/settings.html',
+  '/waypoint/style.css',
+  '/waypoint/script.js',
   'https://cdnjs.cloudflare.com/ajax/libs/antd/4.24.14/antd.min.css',
   'https://cdnjs.cloudflare.com/ajax/libs/antd/4.24.14/antd.min.js'
 ];

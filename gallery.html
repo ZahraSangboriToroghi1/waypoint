@@ -3,41 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Template Gallery</title>
-  <link rel="stylesheet" href="https://github.com/ZahraSangboriToroghi1/waypoint/blob/main/style.css">
+  <title>Frontend Generator</title>
+  <base href="/waypoint/">
+  <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/antd/4.24.14/antd.min.css">
-  <link rel="manifest" href="https://github.com/ZahraSangboriToroghi1/waypoint/blob/main/manifest.json">
+  <link rel="manifest" href="manifest.json">
 </head>
 <body>
   <header class="header">
-    <h1>Template Gallery</h1>
+    <h1>Frontend Generator</h1>
     <button class="header-menu-toggle" onclick="toggleHeaderMenu()">☰</button>
     <div class="header-menu">
       <div id="header-menu-content" class="header-menu-content">
-        <a href="https://github.com/ZahraSangboriToroghi1/waypoint/blob/main/dashboard.html" class="header-menu-item">Dashboard</a>
-        <a href="https://github.com/ZahraSangboriToroghi1/waypoint/blob/main/editor.html" class="header-menu-item">Template Editor</a>
-        <a href="https://github.com/ZahraSangboriToroghi1/waypoint/blob/main/gallery.html" class="header-menu-item">Template Gallery</a>
-        <a href="https://github.com/ZahraSangboriToroghi1/waypoint/blob/main/integrations.html" class="header-menu-item">Email Integrations</a>
-        <a href="https://github.com/ZahraSangboriToroghi1/waypoint/blob/main/settings.html" class="header-menu-item">Settings</a>
+        <a href="dashboard.html" class="header-menu-item">Dashboard</a>
+        <a href="editor.html" class="header-menu-item">Frontend Editor</a>
+        <a href="gallery.html" class="header-menu-item">Frontend Generator</a>
+        <a href="integrations.html" class="header-menu-item">Email Integrations</a>
+        <a href="settings.html" class="header-menu-item">Settings</a>
       </div>
     </div>
-    <a href="https://github.com/ZahraSangboriToroghi1/waypoint/blob/main/profile.html" class="header-link">Profile</a>
-    <a href="https://github.com/ZahraSangboriToroghi1/waypoint/blob/main/index.html" class="header-link">Logout</a>
+    <a href="profile.html" class="header-link">Profile</a>
+    <a href="index.html" class="header-link">Logout</a>
   </header>
   <div class="app">
     <aside id="sidebar" class="sider">
       <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
-      <a href="https://github.com/ZahraSangboriToroghi1/waypoint/blob/main/dashboard.html" class="menu-item">Dashboard</a>
-      <a href="https://github.com/ZahraSangboriToroghi1/waypoint/blob/main/editor.html" class="menu-item">Template Editor</a>
-      <a href="https://github.com/ZahraSangboriToroghi1/waypoint/blob/main/gallery.html" class="menu-item active">Template Gallery</a>
-      <a href="https://github.com/ZahraSangboriToroghi1/waypoint/blob/main/integrations.html" class="menu-item">Email Integrations</a>
-      <a href="https://github.com/ZahraSangboriToroghi1/waypoint/blob/main/settings.html" class="menu-item">Settings</a>
+      <a href="dashboard.html" class="menu-item">Dashboard</a>
+      <a href="editor.html" class="menu-item">Frontend Editor</a>
+      <a href="gallery.html" class="menu-item active">Frontend Generator</a>
+      <a href="integrations.html" class="menu-item">Email Integrations</a>
+      <a href="settings.html" class="menu-item">Settings</a>
     </aside>
     <main class="content">
-      <h2>Template Gallery</h2>
+      <h2>Frontend Generator</h2>
       <div class="filters">
-        <input type="text" id="search-template" placeholder="Search templates..." oninput="filterTemplates()">
-        <select id="category-filter" onchange="filterTemplates()">
+        <input type="text" id="search-frontend" placeholder="Search frontends..." oninput="filterFrontends()">
+        <select id="category-filter" onchange="filterFrontends()">
           <option value="all">All</option>
           <option value="promotional">Promotional</option>
           <option value="onboarding">Onboarding</option>
@@ -45,7 +46,7 @@
           <option value="event">Event</option>
           <option value="transactional">Transactional</option>
         </select>
-        <select id="sort-filter" onchange="filterTemplates()">
+        <select id="sort-filter" onchange="filterFrontends()">
           <option value="newest">Newest</option>
           <option value="popular">Popular</option>
           <option value="alphabetical">Alphabetical</option>
@@ -54,27 +55,27 @@
       <div class="gallery">
         <div class="card">
           <h4>Sales Email</h4>
-          <p>Promotional email template</p>
-          <button class="ant-btn ant-btn-primary" onclick="showPreviewModal('Sales Email', 'Promotional email template')">Preview</button>
-          <button class="ant-btn ant-btn-primary" onclick="editTemplate('sales')">Select Template</button>
+          <p>Promotional email frontend</p>
+          <button class="ant-btn ant-btn-primary" onclick="showPreviewModal('Sales Email', 'Promotional email frontend')">Preview</button>
+          <button class="ant-btn ant-btn-primary" onclick="editFrontend('sales')">Select Frontend</button>
         </div>
         <div class="card">
           <h4>Welcome Email</h4>
-          <p>Onboarding email template</p>
-          <button class="ant-btn ant-btn-primary" onclick="showPreviewModal('Welcome Email', 'Onboarding email template')">Preview</button>
-          <button class="ant-btn ant-btn-primary" onclick="editTemplate('welcome')">Select Template</button>
+          <p>Onboarding email frontend</p>
+          <button class="ant-btn ant-btn-primary" onclick="showPreviewModal('Welcome Email', 'Onboarding email frontend')">Preview</button>
+          <button class="ant-btn ant-btn-primary" onclick="editFrontend('welcome')">Select Frontend</button>
         </div>
         <div class="card">
           <h4>Newsletter</h4>
-          <p>Monthly update template</p>
-          <button class="ant-btn ant-btn-primary" onclick="showPreviewModal('Newsletter', 'Monthly update template')">Preview</button>
-          <button class="ant-btn ant-btn-primary" onclick="editTemplate('newsletter')">Select Template</button>
+          <p>Monthly update frontend</p>
+          <button class="ant-btn ant-btn-primary" onclick="showPreviewModal('Newsletter', 'Monthly update frontend')">Preview</button>
+          <button class="ant-btn ant-btn-primary" onclick="editFrontend('newsletter')">Select Frontend</button>
         </div>
         <div class="card">
           <h4>Event Invite</h4>
-          <p>Event invitation template</p>
-          <button class="ant-btn ant-btn-primary" onclick="showPreviewModal('Event Invite', 'Event invitation template')">Preview</button>
-          <button class="ant-btn ant-btn-primary" onclick="editTemplate('event')">Select Template</button>
+          <p>Event invitation frontend</p>
+          <button class="ant-btn ant-btn-primary" onclick="showPreviewModal('Event Invite', 'Event invitation frontend')">Preview</button>
+          <button class="ant-btn ant-btn-primary" onclick="editFrontend('event')">Select Frontend</button>
         </div>
       </div>
       <div id="modal" class="modal">
@@ -83,13 +84,13 @@
           <h4 id="modal-title"></h4>
           <div id="modal-body"></div>
           <div id="modal-options">
-            <button class="ant-btn ant-btn-primary" onclick="editTemplate(document.getElementById('modal-title').textContent.toLowerCase().replace(' ', '-'))">Select and Edit</button>
+            <button class="ant-btn ant-btn-primary" onclick="editFrontend(document.getElementById('modal-title').textContent.toLowerCase().replace(' ', '-'))">Select and Edit</button>
           </div>
         </div>
       </div>
     </main>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/antd/4.24.14/antd.min.js"></script>
-  <script src="https://github.com/ZahraSangboriToroghi1/waypoint/blob/main/script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

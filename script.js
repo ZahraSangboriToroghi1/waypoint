@@ -1,39 +1,39 @@
 function updatePageTitle() {
   const currentPath = window.location.pathname;
-  const currentPage = currentPath.split('https://github.com/ZahraSangboriToroghi1/waypoint/blob/main/').pop() || 'dashboard.html';
+  const currentPage = currentPath.split('/').pop() || 'dashboard.html';
 
   const translations = {
     'page-title': {
       'index.html': 'Login/Signup',
       'dashboard.html': 'Dashboard',
-      'editor.html': 'Template Editor',
-      'gallery.html': 'Template Gallery',
+      'editor.html': 'Frontend Editor',
+      'gallery.html': 'Frontend Generator',
       'integrations.html': 'Email Integrations',
       'settings.html': 'Settings',
       'profile.html': 'Profile',
     },
     'dashboard-title': 'Dashboard',
-    'editor-title': 'Template Editor',
-    'gallery-title': 'Template Gallery',
+    'editor-title': 'Frontend Editor',
+    'gallery-title': 'Frontend Generator',
     'integrations-title': 'Email Integrations',
     'settings-title': 'Settings',
     'profile-title': 'Profile',
     'dashboard-menu': 'Dashboard',
-    'editor-menu': 'Template Editor',
-    'gallery-menu': 'Template Gallery',
+    'editor-menu': 'Frontend Editor',
+    'gallery-menu': 'Frontend Generator',
     'integrations-menu': 'Email Integrations',
     'settings-menu': 'Settings',
     'profile-link': 'Profile',
     'logout-link': 'Logout',
-    'stats-templates': 'Number of Templates: 10',
+    'stats-frontends': 'Number of Frontends: 10',
     'stats-emails': 'Emails Sent: 150',
     'stats-open-rate': 'Open Rate: 65%',
-    'create-template-btn': 'Create New Template',
+    'create-frontend-btn': 'Create New Frontend',
     'view-gallery-btn': 'View Gallery',
     'connect-service-btn': 'Connect New Service',
     'recent-activity-title': 'Recent Activity',
     'campaign-reports-title': 'Campaign Reports',
-    'select-template-btn': 'Select Template',
+    'select-frontend-btn': 'Select Frontend',
     'integrations-desc': 'Connect to email services',
     'settings-font-title': 'Custom Fonts',
     'upload-font': 'Upload Font',
@@ -44,7 +44,7 @@ function updatePageTitle() {
     'elements-title': 'Elements',
     'drag-here': 'Drag elements here',
     'preview-title': 'Preview',
-    'search-template': 'Search templates...',
+    'search-frontend': 'Search frontends...',
     'category-filter-all': 'All',
     'category-filter-promotional': 'Promotional',
     'category-filter-onboarding': 'Onboarding',
@@ -54,7 +54,7 @@ function updatePageTitle() {
     'sort-filter-newest': 'Newest',
     'sort-filter-popular': 'Popular',
     'sort-filter-alphabetical': 'Alphabetical',
-    'generate-template-btn': 'Smart Template Generation',
+    'generate-frontend-btn': 'Smart Frontend Generation',
     'suggest-content-btn': 'Content Suggestions',
     'spam-analysis-btn': 'Spam Analysis',
     'image-edit-btn': 'Advanced Image Editing',
@@ -65,11 +65,11 @@ function updatePageTitle() {
     'preview-mode-desktop': 'Desktop',
     'preview-mode-tablet': 'Tablet',
     'preview-mode-mobile': 'Mobile',
-    'preview-mode-gmail': 'Gmail',
+    'preview-mode-gmail': 'Email',
     'multi-preview-btn': 'Multi-Device Preview',
     'header-menu-dashboard': 'Dashboard',
-    'header-menu-editor': 'Template Editor',
-    'header-menu-gallery': 'Template Gallery',
+    'header-menu-editor': 'Frontend Editor',
+    'header-menu-gallery': 'Frontend Generator',
     'header-menu-integrations': 'Email Integrations',
     'header-menu-settings': 'Settings'
   };
@@ -86,14 +86,14 @@ function updatePageTitle() {
     if (translations[id]) {
       el.textContent = translations[id];
     }
-    if (id === 'search-template') {
+    if (id === 'search-frontend') {
       el.placeholder = translations[id];
     }
   });
 
   const headerMenuItems = document.querySelectorAll('.header-menu-item');
   headerMenuItems.forEach(item => {
-    const href = item.getAttribute('href').split('https://github.com/ZahraSangboriToroghi1/waypoint/blob/main/').pop();
+    const href = item.getAttribute('href').split('/').pop();
     const pageKey = href || 'dashboard.html';
     const menuId = `header-menu-${pageKey.split('.')[0]}`;
     item.textContent = translations[menuId] || item.textContent;
@@ -138,12 +138,12 @@ function updatePageTitle() {
 
 function handleLogin(event) {
   event.preventDefault();
-  window.location.href = 'https://github.com/ZahraSangboriToroghi1/waypoint/blob/main/editor.html';
+  window.location.href = 'editor.html';
 }
 
 function handleSignup(event) {
   event.preventDefault();
-  window.location.href = 'https://github.com/ZahraSangboriToroghi1/waypoint/blob/main/editor.html';
+  window.location.href = 'editor.html';
 }
 
 function toggleHeaderMenu() {
@@ -173,7 +173,7 @@ function closeModal() {
 }
 
 function showAIGenerateModal() {
-  document.getElementById('modal-title').textContent = 'Smart Template Generation';
+  document.getElementById('modal-title').textContent = 'Smart Frontend Generation';
   document.getElementById('modal-body').innerHTML = `
     <label>Campaign Goal:</label>
     <select id="campaign-goal">
@@ -300,7 +300,7 @@ function showMultiPreviewModal() {
         <div id="preview-mobile">${document.getElementById('canvas-content').innerHTML}</div>
       </div>
       <div style="width: 600px; border: 1px solid #E8E8E8; padding: 10px;">
-        <h4>Gmail</h4>
+        <h4>Email</h4>
         <div id="preview-gmail">${document.getElementById('canvas-content').innerHTML}</div>
       </div>
     </div>
@@ -318,7 +318,7 @@ function handleModalAction() {
   element.draggable = true;
   element.ondragstart = drag;
 
-  if (title.includes('Smart Template Generation')) {
+  if (title.includes('Smart Frontend Generation')) {
     const goal = document.getElementById('campaign-goal').value;
     element.innerHTML = `Suggested Element: ${
       goal === 'sales' ? 'Sales Button' :
@@ -422,8 +422,8 @@ function updatePreviewContent() {
   document.getElementById('preview-content').innerHTML = canvasContent;
 }
 
-function filterTemplates() {
-  const search = document.getElementById('search-template').value.toLowerCase();
+function filterFrontends() {
+  const search = document.getElementById('search-frontend').value.toLowerCase();
   const category = document.getElementById('category-filter').value;
   const sort = document.getElementById('sort-filter').value;
   const cards = document.querySelectorAll('.gallery .card');
@@ -450,8 +450,8 @@ function toggleSidebar() {
 
 function saveCanvas() {
   const canvasContent = document.getElementById('canvas-content').innerHTML;
-  localStorage.setItem('savedTemplate', canvasContent);
-  alert('Template saved!');
+  localStorage.setItem('savedFrontend', canvasContent);
+  alert('Frontend saved!');
 }
 
 function exportHTML() {
@@ -462,7 +462,7 @@ function exportHTML() {
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Email Template</title>
+      <title>Email Frontend</title>
       <style>
         body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
         .canvas-element { border: 1px solid #E8E8E8; padding: 15px; margin-bottom: 20px; }
@@ -477,13 +477,13 @@ function exportHTML() {
   const blob = new Blob([html], { type: 'text/html' });
   const link = document.createElement('a');
   link.href = URL.createObjectURL(blob);
-  link.download = 'template.html';
+  link.download = 'frontend.html';
   link.click();
 }
 
-function editTemplate(templateId) {
-  localStorage.setItem('selectedTemplate', templateId);
-  window.location.href = 'https://github.com/ZahraSangboriToroghi1/waypoint/blob/main/editor.html';
+function editFrontend(frontendId) {
+  localStorage.setItem('selectedFrontend', frontendId);
+  window.location.href = 'editor.html';
 }
 
 function applyCustomFont(event) {
@@ -513,7 +513,7 @@ window.onload = function() {
   }
 
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/js/service-worker.js')
+    navigator.serviceWorker.register('service-worker.js')
       .then(reg => console.log('Service Worker registered'))
       .catch(err => console.error('Service Worker registration failed:', err));
   }
