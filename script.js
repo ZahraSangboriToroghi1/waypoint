@@ -138,12 +138,12 @@ function updatePageTitle() {
 
 function handleLogin(event) {
   event.preventDefault();
-  window.location.href = 'editor.html';
+  window.location.href = 'C:/Users/zahra/waypoint/editor.html';
 }
 
 function handleSignup(event) {
   event.preventDefault();
-  window.location.href = 'editor.html';
+  window.location.href = 'C:/Users/zahra/waypoint/editor.html';
 }
 
 function toggleHeaderMenu() {
