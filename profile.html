@@ -3,560 +3,236 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Profile</title>
+  <title>Contact</title>
   <base href="/waypoint/">
-  <!-- <link rel="stylesheet" href="C:/Users/zahra/waypoint/style.css"> -->
-   <style>
+  <style>
     * {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #FFFFFF;
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 40px 20px;
-}
-
-.title {
-  color: #FA8C16;
-  margin-bottom: 40px;
-  font-size: 28px;
-}
-
-.form-card {
-  width: 100%;
-  max-width: 450px;
-  padding: 40px;
-  background-color: #FFFFFF;
-  border: 1px solid #E8E8E8;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.tabs {
-  display: flex;
-  border-bottom: 1px solid #E8E8E8;
-  margin-bottom: 30px;
-}
-
-.tab-button {
-  flex: 1;
-  padding: 12px;
-  text-align: center;
-  border: none;
-  background: none;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.tab-button.active {
-  border-bottom: 2px solid #52C41A;
-  color: #52C41A;
-}
-
-.tab-content {
-  display: none;
-}
-
-.tab-content.active {
-  display: block;
-}
-
-form input, form select {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 20px;
-  border: 1px solid #E8E8E8;
-  border-radius: 4px;
-  font-size: 14px;
-}
-
-.btn-sso {
-  background-color: #FFFFFF;
-  border: 1px solid #E8E8E8;
-  padding: 12px 24px;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-right: 15px;
-  margin-bottom: 20px;
-  font-size: 14px;
-}
-
-.btn-remove {
-  background-color: #FFFFFF;
-  color: #FF4D4F;
-  border: none;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.link {
-  color: #FA8C16;
-  text-decoration: none;
-  display: inline-block;
-  margin-top: 15px;
-  font-size: 14px;
-}
-
-.header {
-  background-color: #52C41A;
-  color: #FFFFFF;
-  padding: 20px 40px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  z-index: 1000;
-}
-
-.header h1 {
-  margin: 0;
-  font-size: 22px;
-}
-
-.header-menu-toggle {
-  background: none;
-  border: none;
-  color: #FFFFFF;
-  font-size: 18px;
-  cursor: pointer;
-  padding: 5px 10px;
-}
-
-.header-menu-content {
-  display: none;
-  position: absolute;
-  top: 100%;
-  right: 0;
-  background-color: #F5F5F5;
-  border: 1px solid #E8E8E8;
-  border-radius: 4px;
-  z-index: 1001;
-  min-width: 150px;
-}
-
-.header-menu-content.active {
-  display: block;
-}
-
-.header-menu-item {
-  display: block;
-  padding: 10px 15px;
-  color: #FA8C16;
-  text-decoration: none;
-  font-size: 14px;
-}
-
-.header-menu-item:hover {
-  background-color: #E8E8E8;
-}
-
-.header-link {
-  color: #FFFFFF;
-  margin-left: 20px;
-  text-decoration: none;
-  font-size: 14px;
-}
-
-.app {
-  display: flex;
-  min-height: 100vh;
-  margin-top: 60px;
-}
-
-.sider {
-  width: 180px;
-  background-color: #F5F5F5;
-  padding: 40px 20px;
-  height: calc(100vh - 60px);
-  position: fixed;
-  top: 60px;
-  left: 0;
-  transition: transform 0.3s ease;
-}
-
-.menu-toggle {
-  display: none;
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  padding: 10px;
-  position: fixed;
-  top: 65px;
-  left: 10px;
-  z-index: 1001;
-}
-
-.menu-item {
-  display: block;
-  padding: 12px 20px;
-  color: #FA8C16;
-  text-decoration: none;
-  border-radius: 4px;
-  margin-bottom: 20px;
-  font-size: 14px;
-}
-
-.menu-item.active {
-  background-color: #52C41A;
-  color: #FFFFFF;
-}
-
-.content {
-  margin-left: 200px;
-  padding: 40px 20px;
-  flex: 1;
-  max-width: 900px;
-  margin-right: auto;
-}
-
-h2, h4 {
-  margin-bottom: 30px;
-  font-size: 24px;
-}
-
-h4 {
-  font-size: 18px;
-}
-
-.notifications {
-  margin-bottom: 40px;
-}
-
-.notification {
-  background-color: #FFFBE6;
-  border-right: 4px solid #FA8C16;
-  padding: 15px;
-}
-
-.stats, .integrations, .recent, .gallery, .charts, .campaign-reports {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 30px;
-  margin-bottom: 40px;
-}
-
-.card {
-  border: 1px solid #E8E8E8;
-  border-radius: 8px;
-  padding: 30px;
-}
-
-.card:hover {
-  border-color: #FA8C16;
-}
-
-.card p {
-  margin-bottom: 20px;
-  font-size: 14px;
-}
-
-.shortcuts, .ai-tools, .actions {
-  margin-bottom: 40px;
-  display: flex;
-  gap: 15px;
-  flex-wrap: wrap;
-}
-
-.filters {
-  margin-bottom: 40px;
-  display: flex;
-  gap: 15px;
-  flex-wrap: wrap;
-}
-
-.filters input, .filters select {
-  padding: 8px;
-  font-size: 14px;
-}
-
-.form {
-  max-width: 600px;
-}
-
-.form label {
-  display: block;
-  margin-bottom: 10px;
-  font-size: 14px;
-}
-
-.form input, .form select {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 25px;
-  border: 1px solid #E8E8E8;
-  border-radius: 4px;
-  font-size: 14px;
-}
-
-.form input[type="checkbox"] {
-  width: auto;
-  margin-left: 10px;
-}
-
-.editor {
-  display: flex;
-  gap: 30px;
-}
-
-.elements-sidebar {
-  width: 250px;
-  background-color: #F5F5F5;
-  padding: 30px;
-  border-radius: 8px;
-}
-
-.canvas {
-  flex: 1;
-  background-color: #FFFFFF;
-  border: 1px solid #E8E8E8;
-  border-radius: 8px;
-  padding: 30px;
-  min-height: 400px;
-}
-
-.element {
-  background-color: #F5F5F5;
-  padding: 12px;
-  margin-bottom: 20px;
-  border-radius: 4px;
-  cursor: move;
-  color: #FA8C16;
-  font-size: 14px;
-}
-
-.element.dragging {
-  opacity: 0.5;
-}
-
-.canvas p {
-  text-align: center;
-  color: #888;
-  margin-bottom: 25px;
-  font-size: 14px;
-}
-
-.canvas-element {
-  background-color: #FFFFFF;
-  border: 1px solid #E8E8E8;
-  padding: 15px;
-  margin-bottom: 20px;
-  border-radius: 4px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 14px;
-}
-
-.canvas-element:hover {
-  border-color: #FA8C16;
-}
-
-.slider-container {
-  width: 100%;
-  overflow: hidden;
-  position: relative;
-}
-
-.slider-container img {
-  width: 100%;
-  display: none;
-}
-
-.slider-container img.active {
-  display: block;
-}
-
-.preview {
-  border: 1px solid #E8E8E8;
-  padding: 30px;
-  border-radius: 8px;
-  margin: 30px auto;
-}
-
-.chart-placeholder {
-  background-color: #E8E8E8;
-  height: 120px;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #888;
-  font-size: 14px;
-}
-
-.modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1001;
-}
-
-.modal-content {
-  background-color: #FFFFFF;
-  margin: 10% auto;
-  padding: 40px;
-  border: 1px solid #E8E8E8;
-  width: 90%;
-  max-width: 600px;
-  border-radius: 8px;
-}
-
-.close {
-  color: #aaa;
-  float: left;
-  font-size: 28px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.close:hover {
-  color: #000;
-}
-
-#modal-options {
-  margin-top: 25px;
-}
-
-#modal-options label {
-  display: block;
-  margin-bottom: 10px;
-  font-size: 14px;
-}
-
-#modal-options select, #modal-options input[type="color"] {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 20px;
-  font-size: 14px;
-}
-
-@media (min-width: 1025px) {
-  .content {
-    padding: 40px;
-    max-width: 900px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .preview {
-    max-width: 600px;
-  }
-  .editor {
-    flex-direction: row;
-  }
-  .elements-sidebar {
-    width: 250px;
-  }
-}
-
-@media (min-width: 769px) and (max-width: 1024px) {
-  .content {
-    margin-left: 0;
-    padding: 30px;
-    max-width: 100%;
-  }
-  .sider {
-    width: 180px;
-    transform: translateX(-180px);
-    z-index: 1000;
-  }
-  .sider.active {
-    transform: translateX(0);
-  }
-  .menu-toggle {
-    display: block;
-  }
-  .header-menu {
-    display: block;
-  }
-  .preview {
-    max-width: 500px;
-  }
-}
-
-@media (max-width: 768px) {
-  .content {
-    margin-left: 0;
-    padding: 20px;
-    max-width: 100%;
-  }
-  .sider {
-    width: 100%;
-    height: auto;
-    position: fixed;
-    transform: translateX(-100%);
-    z-index: 1000;
-  }
-  .sider.active {
-    transform: translateX(0);
-  }
-  .menu-toggle {
-    display: block;
-  }
-  .header-menu {
-    display: block;
-  }
-  .editor {
-    flex-direction: column;
-  }
-  .elements-sidebar {
-    width: 100%;
-  }
-  .preview {
-    max-width: 100%;
-  }
-  .ai-tools, .actions, .filters {
-    flex-direction: column;
-    gap: 10px;
-  }
-}
-   </style>
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #FFFFFF;
+    }
+    .header {
+      background-color: #52C41A;
+      color: #FFFFFF;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 22px;
+    }
+    .header-menu-toggle {
+      background: none;
+      border: none;
+      color: #FFFFFF;
+      font-size: 18px;
+      cursor: pointer;
+      padding: 5px 10px;
+    }
+    .header-menu-content {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: inherit;
+      background-color: #F5F5F5;
+      border: 1px solid #E8E8E8;
+      border-radius: 4px;
+      z-index: 1001;
+      min-width: 150px;
+    }
+    .header-menu-content.active {
+      display: block;
+    }
+    .header-menu-item {
+      display: block;
+      padding: 10px 15px;
+      color: #FA8C16;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .header-menu-item:hover {
+      background-color: #E8E8E8;
+    }
+    .header-link {
+      color: #FFFFFF;
+      margin-left: 20px;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .app {
+      display: flex;
+      min-height: 100vh;
+      margin-top: 60px;
+    }
+    .sider {
+      width: 180px;
+      background-color: #F5F5F5;
+      padding: 40px 20px;
+      height: calc(100vh - 60px);
+      position: fixed;
+      top: 60px;
+      left: 0;
+      transition: transform 0.3s ease;
+    }
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      padding: 10px;
+      position: fixed;
+      top: 65px;
+      left: 10px;
+      z-index: 1001;
+    }
+    .menu-item {
+      display: block;
+      padding: 12px 20px;
+      color: #FA8C16;
+      text-decoration: none;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+    .menu-item.active {
+      background-color: #52C41A;
+      color: #FFFFFF;
+    }
+    .content {
+      margin-left: 200px;
+      padding: 40px 20px;
+      flex: 1;
+      max-width: 900px;
+      margin-right: auto;
+    }
+    h2, h4 {
+      margin-bottom: 30px;
+      font-size: 24px;
+    }
+    h4 {
+      font-size: 18px;
+    }
+    .form {
+      max-width: 600px;
+      margin-bottom: 40px;
+    }
+    .form label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+    .form input, .form select {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 25px;
+      border: 1px solid #E8E8E8;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    .form input[type="checkbox"] {
+      width: auto;
+      margin-left: 10px;
+    }
+    .recent {
+      margin-bottom: 40px;
+    }
+    .recent p {
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+    @media (min-width: 1025px) {
+      .content {
+        padding: 40px;
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .content {
+        margin-left: 0;
+        padding: 30px;
+        max-width: 100%;
+      }
+      .sider {
+        width: 180px;
+        transform: translateX(-180px);
+        z-index: 1000;
+      }
+      .sider.active {
+        transform: translateX(0);
+      }
+      .menu-toggle {
+        display: block;
+      }
+      .header-menu {
+        display: block;
+      }
+    }
+    @media (max-width: 768px) {
+      .content {
+        margin-left: 0;
+        padding: 20px;
+        max-width: 100%;
+      }
+      .sider {
+        width: 100%;
+        height: auto;
+        position: fixed;
+        transform: translateX(-100%);
+        z-index: 1000;
+      }
+      .sider.active {
+        transform: translateX(0);
+      }
+      .menu-toggle {
+        display: block;
+      }
+      .header-menu {
+        display: block;
+      }
+    }
+  </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/antd/4.24.14/antd.min.css">
-  <link rel="manifest" href="C:/Users/zahra/waypoint/manifest.json">
+  <link rel="manifest" href="manifest.json">
 </head>
 <body>
   <header class="header">
-    <h1>Profile</h1>
+    <h1>Contact</h1>
     <button class="header-menu-toggle" onclick="toggleHeaderMenu()">☰</button>
     <div class="header-menu">
       <div id="header-menu-content" class="header-menu-content">
-        <a href="C:/Users/zahra/waypoint/dashboard.html" class="header-menu-item">Dashboard</a>
-        <a href="C:/Users/zahra/waypoint/editor.html" class="header-menu-item">Frontend Editor</a>
-        <a href="C:/Users/zahra/waypoint/gallery.html" class="header-menu-item">Frontend Generator</a>
-        <a href="C:/Users/zahra/waypoint/integrations.html" class="header-menu-item">Email Integrations</a>
-        <a href="C:/Users/zahra/waypoint/settings.html" class="header-menu-item">Settings</a>
+        <a data-page="dashboard" class="header-menu-item">Dashboard</a>
+        <a data-page="editor" class="header-menu-item">Frontend Editor</a>
+        <a data-page="gallery" class="header-menu-item">Frontend Generator</a>
+        <a data-page="integrations" class="header-menu-item">Email Integrations</a>
+        <a data-page="settings" class="header-menu-item">Settings</a>
       </div>
     </div>
-    <a href="C:/Users/zahra/waypoint/profile.html" class="header-link">Profile</a>
-    <a href="C:/Users/zahra/waypoint/index.html" class="header-link">Logout</a>
+    <a data-page="profile" class="header-link">Contact</a>
+    <a data-page="index" class="header-link">Logout</a>
   </header>
   <div class="app">
     <aside id="sidebar" class="sider">
       <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
-      <a href="C:/Users/zahra/waypoint/dashboard.html" class="menu-item">Dashboard</a>
-      <a href="C:/Users/zahra/waypoint/editor.html" class="menu-item">Frontend Editor</a>
-      <a href="C:/Users/zahra/waypoint/gallery.html" class="menu-item">Frontend Generator</a>
-      <a href="C:/Users/zahra/waypoint/integrations.html" class="menu-item">Email Integrations</a>
-      <a href="C:/Users/zahra/waypoint/settings.html" class="menu-item">Settings</a>
+      <a data-page="dashboard" class="menu-item">Dashboard</a>
+      <a data-page="editor" class="menu-item">Frontend Editor</a>
+      <a data-page="gallery" class="menu-item">Frontend Generator</a>
+      <a data-page="integrations" class="menu-item">Email Integrations</a>
+      <a data-page="settings" class="menu-item active">Settings</a>
     </aside>
     <main class="content">
-      <h2>Profile</h2>
+      <h2>Contact</h2>
       <div class="form">
         <label>Name</label>
         <input type="text" value="John Doe">
@@ -582,8 +258,26 @@ h4 {
     </main>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/antd/4.24.14/antd.min.js"></script>
-  <!-- <script src="C:/Users/zahra/waypoint/script.js"></script> -->
   <script>
+    const pageRoutes = {
+      index: 'index.html',
+      dashboard: 'dashboard.html',
+      editor: 'editor.html',
+      gallery: 'gallery.html',
+      integrations: 'integrations.html',
+      settings: 'settings.html',
+      profile: 'profile.html'
+    };
+
+    function navigateToPage(pageKey) {
+      const path = pageRoutes[pageKey];
+      if (path) {
+        window.location.href = path;
+      } else {
+        console.error(`Page ${pageKey} not found in pageRoutes`);
+      }
+    }
+
     function updatePageTitle() {
       const currentPath = window.location.pathname;
       const currentPage = currentPath.split('/').pop() || 'dashboard.html';
@@ -596,63 +290,22 @@ h4 {
           'gallery.html': 'Frontend Generator',
           'integrations.html': 'Email Integrations',
           'settings.html': 'Settings',
-          'profile.html': 'Profile',
+          'profile.html': 'Contact',
         },
         'dashboard-title': 'Dashboard',
         'editor-title': 'Frontend Editor',
         'gallery-title': 'Frontend Generator',
         'integrations-title': 'Email Integrations',
         'settings-title': 'Settings',
-        'profile-title': 'Profile',
+        'profile-title': 'Contact',
         'dashboard-menu': 'Dashboard',
         'editor-menu': 'Frontend Editor',
         'gallery-menu': 'Frontend Generator',
         'integrations-menu': 'Email Integrations',
         'settings-menu': 'Settings',
-        'profile-link': 'Profile',
+        'profile-link': 'Contact',
         'logout-link': 'Logout',
-        'stats-frontends': 'Number of Frontends: 10',
-        'stats-emails': 'Emails Sent: 150',
-        'stats-open-rate': 'Open Rate: 65%',
-        'create-frontend-btn': 'Create New Frontend',
-        'view-gallery-btn': 'View Gallery',
-        'connect-service-btn': 'Connect New Service',
         'recent-activity-title': 'Recent Activity',
-        'campaign-reports-title': 'Campaign Reports',
-        'select-frontend-btn': 'Select Frontend',
-        'integrations-desc': 'Connect to email services',
-        'settings-font-title': 'Custom Fonts',
-        'upload-font': 'Upload Font',
-        'settings-colors-label': 'Color Palette',
-        'settings-email-notifications-label': 'Email Notifications',
-        'settings-campaign-notifications-label': 'Campaign Notifications',
-        'settings-api-key-label': 'Default API Key',
-        'elements-title': 'Elements',
-        'drag-here': 'Drag elements here',
-        'preview-title': 'Preview',
-        'search-frontend': 'Search frontends...',
-        'category-filter-all': 'All',
-        'category-filter-promotional': 'Promotional',
-        'category-filter-onboarding': 'Onboarding',
-        'category-filter-newsletter': 'Newsletter',
-        'category-filter-event': 'Event',
-        'category-filter-transactional': 'Transactional',
-        'sort-filter-newest': 'Newest',
-        'sort-filter-popular': 'Popular',
-        'sort-filter-alphabetical': 'Alphabetical',
-        'generate-frontend-btn': 'Smart Frontend Generation',
-        'suggest-content-btn': 'Content Suggestions',
-        'spam-analysis-btn': 'Spam Analysis',
-        'image-edit-btn': 'Advanced Image Editing',
-        'branding-btn': 'Smart Branding',
-        'layout-btn': 'Layout Suggestions',
-        'save-btn': 'Save',
-        'export-html-btn': 'Export HTML',
-        'preview-mode-desktop': 'Desktop',
-        'preview-mode-tablet': 'Tablet',
-        'preview-mode-mobile': 'Mobile',
-        'preview-mode-gmail': 'Email',
-        'multi-preview-btn': 'Multi-Device Preview',
         'header-menu-dashboard': 'Dashboard',
         'header-menu-editor': 'Frontend Editor',
         'header-menu-gallery': 'Frontend Generator',
@@ -660,7 +313,7 @@ h4 {
         'header-menu-settings': 'Settings'
       };
 
-      const pageTitle = translations['page-title'][currentPage] || 'Dashboard';
+      const pageTitle = translations['page-title'][currentPage] || 'Contact';
       const pageTitleElement = document.getElementById('page-title');
       if (pageTitleElement) {
         pageTitleElement.textContent = pageTitle;
@@ -672,483 +325,49 @@ h4 {
         if (translations[id]) {
           el.textContent = translations[id];
         }
-        if (id === 'search-frontend') {
-          el.placeholder = translations[id];
-        }
       });
 
       const headerMenuItems = document.querySelectorAll('.header-menu-item');
       headerMenuItems.forEach(item => {
-        const href = item.getAttribute('href').split('/').pop();
-        const pageKey = href || 'dashboard.html';
-        const menuId = `header-menu-${pageKey.split('.')[0]}`;
-        item.textContent = translations[menuId] || item.textContent;
+        const pageKey = item.getAttribute('data-page');
+        if (pageKey) {
+          const menuId = `header-menu-${pageKey}`;
+          item.textContent = translations[menuId] || item.textContent;
+        }
       });
-
-      const categoryFilter = document.getElementById('category-filter');
-      if (categoryFilter) {
-        categoryFilter.innerHTML = `
-          <option value="all">${translations['category-filter-all']}</option>
-          <option value="promotional">${translations['category-filter-promotional']}</option>
-          <option value="onboarding">${translations['category-filter-onboarding']}</option>
-          <option value="newsletter">${translations['category-filter-newsletter']}</option>
-          <option value="event">${translations['category-filter-event']}</option>
-          <option value="transactional">${translations['category-filter-transactional']}</option>
-        `;
-      }
-
-      const sortFilter = document.getElementById('sort-filter');
-      if (sortFilter) {
-        sortFilter.innerHTML = `
-          <option value="newest">${translations['sort-filter-newest']}</option>
-          <option value="popular">${translations['sort-filter-popular']}</option>
-          <option value="alphabetical">${translations['sort-filter-alphabetical']}</option>
-        `;
-      }
-
-      const previewMode = document.getElementById('preview-mode');
-      if (previewMode) {
-        previewMode.innerHTML = `
-          <option value="desktop">${translations['preview-mode-desktop']}</option>
-          <option value="tablet">${translations['preview-mode-tablet']}</option>
-          <option value="mobile">${translations['preview-mode-mobile']}</option>
-          <option value="gmail">${translations['preview-mode-gmail']}</option>
-        `;
-      }
-
-      if (document.getElementById('upload-font')) {
-        document.getElementById('upload-font').value = '';
-        document.getElementById('upload-font').nextElementSibling.textContent = translations['upload-font'];
-      }
-    }
-
-    function handleLogin(event) {
-      event.preventDefault();
-      window.location.href = 'C:/Users/zahra/waypoint/editor.html';
-    }
-
-    function handleSignup(event) {
-      event.preventDefault();
-      window.location.href = 'C:/Users/zahra/waypoint/editor.html';
     }
 
     function toggleHeaderMenu() {
       const headerMenuContent = document.getElementById('header-menu-content');
-      headerMenuContent.classList.toggle('active');
-    }
-
-    function showTab(tabId) {
-      const tabs = document.querySelectorAll('.tab-content');
-      const buttons = document.querySelectorAll('.tab-button');
-      tabs.forEach(tab => tab.classList.remove('active'));
-      buttons.forEach(button => button.classList.remove('active'));
-      document.getElementById(tabId).classList.add('active');
-      buttons[tabId === 'login' ? 0 : 1].classList.add('active');
-    }
-
-    function showModal(title, content) {
-      document.getElementById('modal-title').textContent = title;
-      document.getElementById('modal-body').textContent = content;
-      document.getElementById('modal-options').style.display = 'none';
-      document.getElementById('modal-input').style.display = title.includes('Enter campaign') ? 'block' : 'none';
-      document.getElementById('modal').style.display = 'block';
-    }
-
-    function closeModal() {
-      document.getElementById('modal').style.display = 'none';
-    }
-
-    function showAIGenerateModal() {
-      document.getElementById('modal-title').textContent = 'Smart Frontend Generation';
-      document.getElementById('modal-body').innerHTML = `
-        <label>Campaign Goal:</label>
-        <select id="campaign-goal">
-          <option value="sales">Sales</option>
-          <option value="welcome">Welcome</option>
-          <option value="event">Event</option>
-        </select>
-      `;
-      document.getElementById('modal-options').style.display = 'block';
-      document.getElementById('modal-input').style.display = 'none';
-      document.getElementById('modal').style.display = 'block';
-    }
-
-    function showAIContentModal() {
-      document.getElementById('modal-title').textContent = 'Content Suggestions';
-      document.getElementById('modal-body').innerHTML = `
-        <label>Content Type:</label>
-        <select id="content-type">
-          <option value="header">Header</option>
-          <option value="body">Body</option>
-          <option value="cta">CTA</option>
-        </select>
-        <label>Tone:</label>
-        <select id="content-tone">
-          <option value="formal">Formal</option>
-          <option value="friendly">Friendly</option>
-        </select>
-        <label>Grammar Check:</label>
-        <input type="checkbox" id="grammar-check">
-      `;
-      document.getElementById('modal-options').style.display = 'block';
-      document.getElementById('modal-input').style.display = 'none';
-      document.getElementById('modal').style.display = 'block';
-    }
-
-    function showAISpamAnalysisModal() {
-      document.getElementById('modal-title').textContent = 'Spam Analysis';
-      document.getElementById('modal-body').innerHTML = `
-        <p>Spam Score: 3/10</p>
-        <p>Improvement Tips:</p>
-        <ul>
-          <li>Reduce the number of links</li>
-          <li>Use fewer spammy words</li>
-          <li>Shorten email length</li>
-        </ul>
-      `;
-      document.getElementById('modal-options').style.display = 'none';
-      document.getElementById('modal-input').style.display = 'none';
-      document.getElementById('modal').style.display = 'block';
-    }
-
-    function showAIImageEditModal() {
-      document.getElementById('modal-title').textContent = 'Advanced Image Editing';
-      document.getElementById('modal-body').innerHTML = `
-        <label>Upload Image:</label>
-        <input type="file" id="image-upload">
-        <label>Action:</label>
-        <select id="image-action">
-          <option value="crop">Crop</option>
-          <option value="filter">Filter</option>
-          <option value="add-text">Add Text</option>
-          <option value="remove-bg">Remove Background</option>
-        </select>
-      `;
-      document.getElementById('modal-options').style.display = 'block';
-      document.getElementById('modal-input').style.display = 'none';
-      document.getElementById('modal').style.display = 'block';
-    }
-
-    function showAIBrandingModal() {
-      document.getElementById('modal-title').textContent = 'Smart Branding';
-      document.getElementById('modal-body').innerHTML = `
-        <label>Suggested Color Palette:</label>
-        <input type="color" value="#52C41A">
-        <input type="color" value="#FA8C16">
-        <label>Suggested Font:</label>
-        <select id="font-select">
-          <option>Arial</option>
-          <option>Helvetica</option>
-        </select>
-        <p>Preview:</p>
-        <div style="background-color: #52C41A; color: #FFFFFF; padding: 10px;">Sample Text</div>
-      `;
-      document.getElementById('modal-options').style.display = 'block';
-      document.getElementById('modal-input').style.display = 'none';
-      document.getElementById('modal').style.display = 'block';
-    }
-
-    function showAILayoutModal() {
-      document.getElementById('modal-title').textContent = 'Layout Suggestions';
-      document.getElementById('modal-body').innerHTML = `
-        <label>Email Type:</label>
-        <select id="email-type">
-          <option value="promotional">Promotional</option>
-          <option value="welcome">Welcome</option>
-          <option value="newsletter">Newsletter</option>
-        </select>
-        <p>Suggested Layout:</p>
-        <ul>
-          <li>Place CTA at the top</li>
-          <li>Add hero image below CTA</li>
-          <li>Include text content at the bottom</li>
-        </ul>
-      `;
-      document.getElementById('modal-options').style.display = 'block';
-      document.getElementById('modal-input').style.display = 'none';
-      document.getElementById('modal').style.display = 'block';
-    }
-
-    function showMultiPreviewModal() {
-      document.getElementById('modal-title').textContent = 'Multi-Device Preview';
-      document.getElementById('modal-body').innerHTML = `
-        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-          <div style="width: 600px; border: 1px solid #E8E8E8; padding: 10px;">
-            <h4>Desktop</h4>
-            <div id="preview-desktop">${document.getElementById('canvas-content').innerHTML}</div>
-          </div>
-          <div style="width: 500px; border: 1px solid #E8E8E8; padding: 10px;">
-            <h4>Tablet</h4>
-            <div id="preview-tablet">${document.getElementById('canvas-content').innerHTML}</div>
-          </div>
-          <div style="width: 375px; border: 1px solid #E8E8E8; padding: 10px;">
-            <h4>Mobile</h4>
-            <div id="preview-mobile">${document.getElementById('canvas-content').innerHTML}</div>
-          </div>
-          <div style="width: 600px; border: 1px solid #E8E8E8; padding: 10px;">
-            <h4>Email</h4>
-            <div id="preview-gmail">${document.getElementById('canvas-content').innerHTML}</div>
-          </div>
-        </div>
-      `;
-      document.getElementById('modal-options').style.display = 'none';
-      document.getElementById('modal-input').style.display = 'none';
-      document.getElementById('modal').style.display = 'block';
-    }
-
-    function handleModalAction() {
-      const title = document.getElementById('modal-title').textContent;
-      const canvasContent = document.getElementById('canvas-content');
-      const element = document.createElement('div');
-      element.className = 'canvas-element';
-      element.draggable = true;
-      element.ondragstart = drag;
-
-      if (title.includes('Smart Frontend Generation')) {
-        const goal = document.getElementById('campaign-goal').value;
-        element.innerHTML = `Suggested Element: ${
-          goal === 'sales' ? 'Sales Button' :
-          goal === 'welcome' ? 'Welcome Text' :
-          'Event Invitation'
-        }<button class="btn-remove" onclick="this.parentElement.remove()">Remove</button>`;
-      } else if (title.includes('Content Suggestions')) {
-        const type = document.getElementById('content-type').value;
-        const tone = document.getElementById('content-tone').value;
-        element.innerHTML = `Suggested Content: ${
-          type === 'header' ? 'Catchy Header' :
-          type === 'body' ? 'Body Text' :
-          'Call to Action'
-        } (${tone})<button class="btn-remove" onclick="this.parentElement.remove()">Remove</button>`;
-      } else if (title.includes('Advanced Image Editing')) {
-        const action = document.getElementById('image-action').value;
-        element.innerHTML = `Image (${action})<button class="btn-remove" onclick="this.parentElement.remove()">Remove</button>`;
-      } else if (title.includes('Smart Branding')) {
-        const font = document.getElementById('font-select').value;
-        element.style.fontFamily = font;
-        element.innerHTML = `Branded Text (Font: ${font})<button class="btn-remove" onclick="this.parentElement.remove()">Remove</button>`;
-      } else if (title.includes('Layout Suggestions')) {
-        const type = document.getElementById('email-type').value;
-        element.innerHTML = `Layout: ${type} (CTA at top)<button class="btn-remove" onclick="this.parentElement.remove()">Remove</button>`;
+      if (headerMenuContent) {
+        headerMenuContent.classList.toggle('active');
       }
-
-      canvasContent.appendChild(element);
-      document.getElementById('drag-here').style.display = 'none';
-      updatePreviewContent();
-      closeModal();
-    }
-
-    function showPreviewModal(title, content) {
-      document.getElementById('modal-title').textContent = title;
-      document.getElementById('modal-body').textContent = content;
-      document.getElementById('modal-options').style.display = 'block';
-      document.getElementById('modal').style.display = 'block';
-    }
-
-    function closePreviewModal() {
-      document.getElementById('modal').style.display = 'none';
-    }
-
-    function allowDrop(ev) {
-      ev.preventDefault();
-    }
-
-    function drag(ev) {
-      ev.dataTransfer.setData("text", ev.target.id);
-    }
-
-    function drop(ev) {
-      ev.preventDefault();
-      const data = ev.dataTransfer.getData("text");
-      const element = document.createElement('div');
-      element.className = 'canvas-element';
-      element.draggable = true;
-      element.ondragstart = drag;
-
-      if (data === 'slider') {
-        element.innerHTML = `
-          <div class="slider-container">
-            <img src="https://via.placeholder.com/600x200?text=Slide+1" class="active">
-            <img src="https://via.placeholder.com/600x200?text=Slide+2">
-            <img src="https://via.placeholder.com/600x200?text=Slide+3">
-          </div>
-          <button class="btn-remove" onclick="this.parentElement.remove()">Remove</button>
-        `;
-        setInterval(() => {
-          const slides = element.querySelectorAll('img');
-          let activeIndex = 0;
-          slides.forEach((slide, index) => {
-            if (slide.classList.contains('active')) activeIndex = index;
-            slide.classList.remove('active');
-          });
-          slides[(activeIndex + 1) % slides.length].classList.add('active');
-        }, 3000);
-      } else {
-        element.innerHTML = document.getElementById(data).textContent + `<button class="btn-remove" onclick="this.parentElement.remove()">Remove</button>`;
-      }
-
-      document.getElementById('canvas-content').appendChild(element);
-      document.getElementById('drag-here').style.display = 'none';
-      updatePreviewContent();
-    }
-
-    function updatePreview() {
-      const mode = document.getElementById('preview-mode').value;
-      const previewSection = document.getElementById('preview-section');
-      previewSection.style.maxWidth = mode === 'mobile' ? '375px' : mode === 'tablet' ? '500px' : mode === 'gmail' ? '600px' : '600px';
-      if (mode === 'gmail') {
-        previewSection.style.fontFamily = 'Arial, sans-serif';
-        previewSection.style.padding = '10px';
-        previewSection.style.backgroundColor = '#F5F5F5';
-      }
-      updatePreviewContent();
-    }
-
-    function updatePreviewContent() {
-      const canvasContent = document.getElementById('canvas-content').innerHTML;
-      document.getElementById('preview-content').innerHTML = canvasContent;
-    }
-
-    function filterFrontends() {
-      const search = document.getElementById('search-frontend').value.toLowerCase();
-      const category = document.getElementById('category-filter').value;
-      const sort = document.getElementById('sort-filter').value;
-      const cards = document.querySelectorAll('.gallery .card');
-
-      let filteredCards = Array.from(cards).filter(card => {
-        const title = card.querySelector('h4').textContent.toLowerCase();
-        return (category === 'all' || card.querySelector('h4').textContent.includes(category)) && title.includes(search);
-      });
-
-      if (sort === 'alphabetical') {
-        filteredCards.sort((a, b) => a.querySelector('h4').textContent.localeCompare(b.querySelector('h4').textContent));
-      } else if (sort === 'popular') {
-        filteredCards.sort((a, b) => b.querySelector('h4').textContent.length - a.querySelector('h4').textContent.length);
-      }
-
-      cards.forEach(card => card.style.display = 'none');
-      filteredCards.forEach(card => card.style.display = 'block');
     }
 
     function toggleSidebar() {
       const sidebar = document.getElementById('sidebar');
-      sidebar.classList.toggle('active');
-    }
-
-    function saveCanvas() {
-      const canvasContent = document.getElementById('canvas-content').innerHTML;
-      localStorage.setItem('savedFrontend', canvasContent);
-      alert('Frontend saved!');
-    }
-
-    function exportHTML() {
-      const canvasContent = document.getElementById('canvas-content').innerHTML;
-      const html = `
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>Email Frontend</title>
-          <style>
-            body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
-            .canvas-element { border: 1px solid #E8E8E8; padding: 15px; margin-bottom: 20px; }
-            .slider-container img { width: 100%; }
-          </style>
-        </head>
-        <body>
-          ${canvasContent}
-        </body>
-        </html>
-      `;
-      const blob = new Blob([html], { type: 'text/html' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = 'frontend.html';
-      link.click();
-    }
-
-    function editFrontend(frontendId) {
-      localStorage.setItem('selectedFrontend', frontendId);
-      window.location.href = 'editor.html';
-    }
-
-    function applyCustomFont(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          const fontFace = new FontFace('CustomFont', e.target.result);
-          fontFace.load().then(() => {
-            document.fonts.add(fontFace);
-            const canvasElements = document.querySelectorAll('.canvas-element');
-            canvasElements.forEach(el => {
-              el.style.fontFamily = 'CustomFont, Arial, sans-serif';
-            });
-          });
-        };
-        reader.readAsArrayBuffer(file);
+      if (sidebar) {
+        sidebar.classList.toggle('active');
       }
     }
 
     window.addEventListener('popstate', updatePageTitle);
 
-    window.onload = function() {
+    window.addEventListener('load', () => {
       updatePageTitle();
-      if (document.getElementById('preview-mode')) {
-        updatePreview();
-      }
 
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('service-worker.js')
-          .then(reg => console.log('Service Worker registered'))
-          .catch(err => console.error('Service Worker registration failed:', err));
-      }
-
-      document.querySelectorAll('.menu-item, .header-link, .header-menu-item').forEach(link => {
-        link.addEventListener('click', (e) => {
+      document.addEventListener('click', (e) => {
+        const link = e.target.closest('.menu-item, .header-link, .header-menu-item');
+        if (link) {
           e.preventDefault();
-          const href = link.getAttribute('href');
-          window.location.href = href;
-          setTimeout(updatePageTitle, 100);
-        });
+          const pageKey = link.getAttribute('data-page');
+          if (pageKey) {
+            navigateToPage(pageKey);
+            setTimeout(updatePageTitle, 100);
+          }
+        }
       });
-
-      const fontInput = document.getElementById('upload-font');
-      if (fontInput) {
-        fontInput.addEventListener('change', applyCustomFont);
-      }
-    };
-   </script>
-   <script>
-    const CACHE_NAME = 'waypoint-cache-v1';
-    const urlsToCache = [
-      '/waypoint/',
-      '/waypoint/index.html',
-      '/waypoint/dashboard.html',
-      '/waypoint/editor.html',
-      '/waypoint/gallery.html',
-      '/waypoint/integrations.html',
-      '/waypoint/profile.html',
-      '/waypoint/settings.html',
-      '/waypoint/style.css',
-      '/waypoint/script.js',
-      'https://cdnjs.cloudflare.com/ajax/libs/antd/4.24.14/antd.min.css',
-      'https://cdnjs.cloudflare.com/ajax/libs/antd/4.24.14/antd.min.js'
-    ];
-
-    self.addEventListener('install', event => {
-      event.waitUntil(
-        caches.open(CACHE_NAME)
-          .then(cache => cache.addAll(urlsToCache))
-      );
     });
-
-    self.addEventListener('fetch', event => {
-      event.respondWith(
-        caches.match(event.request)
-          .then(response => response || fetch(event.request))
-      );
-    });
-   </script>
+  </script>
 </body>
 </html>
