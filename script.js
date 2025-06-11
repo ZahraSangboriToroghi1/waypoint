@@ -1,6 +1,6 @@
 function updatePageTitle() {
   const currentPath = window.location.pathname;
-  const currentPage = currentPath.split('https://github.com/ZahraSangboriToroghi1/waypoint/').pop() || 'dashboard.html';
+  const currentPage = currentPath.split('https://github.com/ZahraSangboriToroghi1/waypoint/blob/main/').pop() || 'dashboard.html';
 
   const translations = {
     'page-title': {
@@ -93,7 +93,7 @@ function updatePageTitle() {
 
   const headerMenuItems = document.querySelectorAll('.header-menu-item');
   headerMenuItems.forEach(item => {
-    const href = item.getAttribute('href').split('https://github.com/ZahraSangboriToroghi1/waypoint/').pop();
+    const href = item.getAttribute('href').split('https://github.com/ZahraSangboriToroghi1/waypoint/blob/main/').pop();
     const pageKey = href || 'dashboard.html';
     const menuId = `header-menu-${pageKey.split('.')[0]}`;
     item.textContent = translations[menuId] || item.textContent;
@@ -138,12 +138,12 @@ function updatePageTitle() {
 
 function handleLogin(event) {
   event.preventDefault();
-  window.location.href = 'https://github.com/ZahraSangboriToroghi1/waypoint/editor.html';
+  window.location.href = 'https://github.com/ZahraSangboriToroghi1/waypoint/blob/main/editor.html';
 }
 
 function handleSignup(event) {
   event.preventDefault();
-  window.location.href = 'https://github.com/ZahraSangboriToroghi1/waypoint/editor.html';
+  window.location.href = 'https://github.com/ZahraSangboriToroghi1/waypoint/blob/main/editor.html';
 }
 
 function toggleHeaderMenu() {
@@ -483,7 +483,7 @@ function exportHTML() {
 
 function editTemplate(templateId) {
   localStorage.setItem('selectedTemplate', templateId);
-  window.location.href = 'https://github.com/ZahraSangboriToroghi1/waypoint/editor.html';
+  window.location.href = 'https://github.com/ZahraSangboriToroghi1/waypoint/blob/main/editor.html';
 }
 
 function applyCustomFont(event) {
