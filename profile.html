@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile</title>
+  <link rel="stylesheet" href="C:/Users/zahra/waypoint/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/antd/4.24.14/antd.min.css">
+  <link rel="manifest" href="C:/Users/zahra/waypoint/manifest.json">
+</head>
+<body>
+  <header class="header">
+    <h1>Profile</h1>
+    <button class="header-menu-toggle" onclick="toggleHeaderMenu()">☰</button>
+    <div class="header-menu">
+      <div id="header-menu-content" class="header-menu-content">
+        <a href="C:/Users/zahra/waypoint/dashboard.html" class="header-menu-item">Dashboard</a>
+        <a href="C:/Users/zahra/waypoint/editor.html" class="header-menu-item">Template Editor</a>
+        <a href="C:/Users/zahra/waypoint/gallery.html" class="header-menu-item">Template Gallery</a>
+        <a href="C:/Users/zahra/waypoint/integrations.html" class="header-menu-item">Email Integrations</a>
+        <a href="C:/Users/zahra/waypoint/settings.html" class="header-menu-item">Settings</a>
+      </div>
+    </div>
+    <a href="C:/Users/zahra/waypoint/profile.html" class="header-link">Profile</a>
+    <a href="C:/Users/zahra/waypoint/index.html" class="header-link">Logout</a>
+  </header>
+  <div class="app">
+    <aside id="sidebar" class="sider">
+      <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+      <a href="C:/Users/zahra/waypoint/dashboard.html" class="menu-item">Dashboard</a>
+      <a href="C:/Users/zahra/waypoint/editor.html" class="menu-item">Template Editor</a>
+      <a href="C:/Users/zahra/waypoint/gallery.html" class="menu-item">Template Gallery</a>
+      <a href="C:/Users/zahra/waypoint/integrations.html" class="menu-item">Email Integrations</a>
+      <a href="C:/Users/zahra/waypoint/settings.html" class="menu-item active">Settings</a>
+    </aside>
+    <main class="content">
+      <h2>Profile</h2>
+      <div class="form">
+        <label>Name</label>
+        <input type="text" value="John Doe">
+        <label>Email</label>
+        <input type="email" value="john@example.com">
+        <label>Change Password</label>
+        <input type="password" placeholder="New Password">
+        <label>Profile Picture</label>
+        <input type="file">
+        <label>Connect Social Accounts</label>
+        <div>
+          <button class="ant-btn ant-btn-primary">LinkedIn</button>
+          <button class="ant-btn ant-btn-primary">Twitter</button>
+        </div>
+        <button class="ant-btn ant-btn-primary">Edit Profile</button>
+      </div>
+      <div class="recent">
+        <h4>Recent Activity</h4>
+        <p>Created Template - 2025-06-02</p>
+        <p>Sent Email - 2025-06-03</p>
+        <p>Updated Profile - 2025-06-04</p>
+      </div>
+    </main>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/antd/4.24.14/antd.min.js"></script>
+  <script src="C:/Users/zahra/waypoint/script.js"></script>
+</body>
+</html>
