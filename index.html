@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login/Signup</title>
-  <base href="/waypoint/">           
+  <base href="/waypoint/">
   <style>
     * {
       box-sizing: border-box;
@@ -123,13 +123,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/antd/4.24.14/antd.min.js"></script>
   <script>
     const pageRoutes = {
-      index: 'index.html',
-      dashboard: 'dashboard.html',
-      editor: 'editor.html',
-      gallery: 'gallery.html',
-      integrations: 'integrations.html',
-      settings: 'settings.html',
-      profile: 'profile.html'
+      index: '/waypoint/index.html',
+      dashboard: '/waypoint/dashboard.html',
+      editor: '/waypoint/editor.html',
+      gallery: '/waypoint/gallery.html',
+      integrations: '/waypoint/integrations.html',
+      settings: '/waypoint/settings.html',
+      profile: '/waypoint/profile.html'
     };
 
     function navigateToPage(pageKey) {
@@ -143,7 +143,7 @@
 
     function updatePageTitle() {
       const currentPath = window.location.pathname;
-      const currentPage = currentPath.split('/').pop() || 'dashboard.html';
+      const currentPage = currentPath.split('/').pop() || 'index.html';
 
       const translations = {
         'page-title': {
