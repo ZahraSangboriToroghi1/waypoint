@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login/Signup</title>
-  <base href="https://zahrasangboritoroghi1.github.io/waypoint/">
+  <base href="https://github.com/ZahraSangboriToroghi1/waypoint/">     
   <style>
     * {
       box-sizing: border-box;
@@ -123,13 +123,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/antd/4.24.14/antd.min.js"></script>
   <script>
     const pageRoutes = {
-      index: 'https://zahrasangboritoroghi1.github.io/waypoint/index.html',
-      dashboard: 'https://zahrasangboritoroghi1.github.io/waypoint/dashboard.html',
-      editor: 'https://zahrasangboritoroghi1.github.io/waypoint/editor.html',
-      gallery: 'https://zahrasangboritoroghi1.github.io/waypoint/gallery.html',
-      integrations: 'https://zahrasangboritoroghi1.github.io/waypoint/integrations.html',
-      settings: 'https://zahrasangboritoroghi1.github.io/waypoint/settings.html',
-      profile: 'https://zahrasangboritoroghi1.github.io/waypoint/profile.html'
+      index: 'index.html',
+      dashboard: 'dashboard.html',
+      editor: 'editor.html',
+      gallery: 'gallery.html',
+      integrations: 'integrations.html',
+      settings: 'settings.html',
+      profile: 'profile.html'
     };
 
     function navigateToPage(pageKey) {
@@ -709,7 +709,7 @@
       const canvasContent = document.getElementById('canvas-content');
       if (canvasContent) {
         localStorage.setItem('savedFrontend', canvasContent.innerHTML);
-        alert('Frontend saved!');
+        console.log('Frontend saved!');
       }
     }
 
@@ -744,7 +744,7 @@
 
     function editFrontend(frontendId) {
       localStorage.setItem('selectedFrontend', frontendId);
-      navigateToPage('editor');
+      navigateToPage('edit');
     }
 
     function applyCustomFont(event) {
