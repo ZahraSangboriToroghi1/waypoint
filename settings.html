@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings</title>
+  <base href="https://zahrasangboritoroghi1.github.io/waypoint/">              
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #FFFFFF;
+    }
+    .header {
+      background-color: #552978;
+      color: #FFFFFF;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 22px;
+    }
+    .header-menu-toggle {
+      background: none;
+      border: none;
+      color: #FFFFFF;
+      font-size: 18px;
+      cursor: pointer;
+      padding: 5px 10px;
+    }
+    .header-menu-content {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: inherit;
+      background-color: #F5F5F5;
+      border: 1px solid #E8E8E8;
+      border-radius: 4px;
+      z-index: 1001;
+      min-width: 150px;
+    }
+    .header-menu-content.active {
+      display: block;
+    }
+    .header-menu-item {
+      display: block;
+      padding: 10px 15px;
+      color: #e4b55b;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .header-menu-item:hover {
+      background-color: #E8E8E8;
+    }
+    .header-link {
+      color: #FFFFFF;
+      margin-left: 20px;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .app {
+      display: flex;
+      min-height: 100vh;
+      margin-top: 60px;
+    }
+    .sider {
+      width: 180px;
+      background-color: #F5F5F5;
+      padding: 40px 20px;
+      height: calc(100vh - 60px);
+      position: fixed;
+      top: 60px;
+      left: 0;
+      transition: transform 0.3s ease;
+    }
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      padding: 10px;
+      position: fixed;
+      top: 65px;
+      left: 10px;
+      z-index: 1001;
+    }
+    .menu-item {
+      display: block;
+      padding: 12px 20px;
+      color: #e4b55b;
+      text-decoration: none;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+    .menu-item.active {
+      background-color: #552978;
+      color: #FFFFFF;
+    }
+    .content {
+      margin-left: 200px;
+      padding: 40px 20px;
+      flex: 1;
+      max-width: 900px;
+      margin-right: auto;
+    }
+    h2, h4 {
+      margin-bottom: 30px;
+      font-size: 24px;
+    }
+    h4 {
+      font-size: 18px;
+    }
+    .form {
+      max-width: 600px;
+      margin-bottom: 40px;
+    }
+    .form label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+    .form input, .form select {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 25px;
+      border: 1px solid #E8E8E8;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    .form input[type="checkbox"] {
+      width: auto;
+      margin-left: 10px;
+    }
+    @media (min-width: 1025px) {
+      .content {
+        padding: 40px;
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .content {
+        margin-left: 0;
+        padding: 30px;
+        max-width: 100%;
+      }
+      .sider {
+        width: 180px;
+        transform: translateX(-180px);
+        z-index: 1000;
+      }
+      .sider.active {
+        transform: translateX(0);
+      }
+      .menu-toggle {
+        display: block;
+      }
+      .header-menu {
+        display: block;
+      }
+    }
+    @media (max-width: 768px) {
+      .content {
+        margin-left: 0;
+        padding: 20px;
+        max-width: 100%;
+      }
+      .sider {
+        width: 100%;
+        height: auto;
+        position: fixed;
+        transform: translateX(-100%);
+        z-index: 1000;
+      }
+      .sider.active {
+        transform: translateX(0);
+      }
+      .menu-toggle {
+        display: block;
+      }
+      .header-menu {
+        display: block;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/antd/4.24.14/antd.min.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+  <header class="header">
+    <h1>Settings</h1>
+    <button class="header-menu-toggle" onclick="toggleHeaderMenu()">☰</button>
+    <div class="header-menu">
+      <div id="header-menu-content" class="header-menu-content">
+        <a data-page="dashboard" class="header-menu-item">Dashboard</a>
+        <a data-page="editor" class="header-menu-item">Frontend Editor</a>
+        <a data-page="gallery" class="header-menu-item">Frontend Generator</a>
+        <a data-page="integrations" class="header-menu-item">Email Integrations</a>
+        <a data-page="settings" class="header-menu-item">Settings</a>
+      </div>
+    </div>
+    <a data-page="profile" class="header-link">Contact</a>
+    <a data-page="index" class="header-link">Logout</a>
+  </header>
+  <div class="app">
+    <aside id="sidebar" class="sider">
+      <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+      <a data-page="dashboard" class="menu-item">Dashboard</a>
+      <a data-page="editor" class="menu-item">Frontend Editor</a>
+      <a data-page="gallery" class="menu-item">Frontend Generator</a>
+      <a data-page="integrations" class="menu-item">Email Integrations</a>
+      <a data-page="settings" class="menu-item active">Settings</a>
+    </aside>
+    <main class="content">
+      <h2>Settings</h2>
+      <div class="form">
+        <h4>Appearance</h4>
+        <label>Custom Fonts</label>
+        <input type="file" id="upload-font" accept=".woff,.woff2" onchange="applyCustomFont(event)">
+        <label>Color Palette</label>
+        <input type="color" value="#552978">
+        <h4>Notifications</h4>
+        <label><input type="checkbox" checked> Email Notifications</label>
+        <label><input type="checkbox" checked> Campaign Notifications</label>
+        <h4>API Settings</h4>
+        <label>Default API Key</label>
+        <input type="text" placeholder="Enter API Key">
+        <button class="ant-btn ant-btn-primary">Save</button>
+      </div>
+    </main>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/antd/4.24.14/antd.min.js"></script>
+  <script>
+    const pageRoutes = {
+      index: 'index.html',
+      dashboard: 'dashboard.html',
+      editor: 'editor.html',
+      gallery: 'gallery.html',
+      integrations: 'integrations.html',
+      settings: 'settings.html',
+      profile: 'profile.html'
+    };
+
+    function navigateToPage(pageKey) {
+      const path = pageRoutes[pageKey];
+      if (path) {
+        window.location.href = path;
+      } else {
+        console.error(`Page ${pageKey} not found in pageRoutes`);
+      }
+    }
+
+    function updatePageTitle() {
+      const currentPath = window.location.pathname;
+      const currentPage = currentPath.split('/').pop() || 'dashboard.html';
+
+      const translations = {
+        'page-title': {
+          'index.html': 'Login/Signup',
+          'dashboard.html': 'Dashboard',
+          'editor.html': 'Frontend Editor',
+          'gallery.html': 'Frontend Generator',
+          'integrations.html': 'Email Integrations',
+          'settings.html': 'Settings',
+          'profile.html': 'Contact',
+        },
+        'dashboard-title': 'Dashboard',
+        'editor-title': 'Frontend Editor',
+        'gallery-title': 'Frontend Generator',
+        'integrations-title': 'Email Integrations',
+        'settings-title': 'Settings',
+        'profile-title': 'Contact',
+        'dashboard-menu': 'Dashboard',
+        'editor-menu': 'Frontend Editor',
+        'gallery-menu': 'Frontend Generator',
+        'integrations-menu': 'Email Integrations',
+        'settings-menu': 'Settings',
+        'profile-link': 'Contact',
+        'logout-link': 'Logout',
+        'settings-font-title': 'Custom Fonts',
+        'upload-font': 'Upload Font',
+        'settings-colors-label': 'Color Palette',
+        'settings-email-notifications-label': 'Email Notifications',
+        'settings-campaign-notifications-label': 'Campaign Notifications',
+        'settings-api-key-label': 'Default API Key',
+        'header-menu-dashboard': 'Dashboard',
+        'header-menu-editor': 'Frontend Editor',
+        'header-menu-gallery': 'Frontend Generator',
+        'header-menu-integrations': 'Email Integrations',
+        'header-menu-settings': 'Settings'
+      };
+
+      const pageTitle = translations['page-title'][currentPage] || 'Settings';
+      const pageTitleElement = document.getElementById('page-title');
+      if (pageTitleElement) {
+        pageTitleElement.textContent = pageTitle;
+      }
+
+      const elements = document.querySelectorAll('[id]');
+      elements.forEach(el => {
+        const id = el.id;
+        if (translations[id]) {
+          el.textContent = translations[id];
+        }
+      });
+
+      const headerMenuItems = document.querySelectorAll('.header-menu-item');
+      headerMenuItems.forEach(item => {
+        const pageKey = item.getAttribute('data-page');
+        if (pageKey) {
+          const menuId = `header-menu-${pageKey}`;
+          item.textContent = translations[menuId] || item.textContent;
+        }
+      });
+
+      const fontInput = document.getElementById('upload-font');
+      if (fontInput) {
+        fontInput.value = '';
+        const nextSibling = fontInput.nextElementSibling;
+        if (nextSibling) {
+          nextSibling.textContent = translations['upload-font'];
+        }
+      }
+    }
+
+    function toggleHeaderMenu() {
+      const headerMenuContent = document.getElementById('header-menu-content');
+      if (headerMenuContent) {
+        headerMenuContent.classList.toggle('active');
+      }
+    }
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      if (sidebar) {
+        sidebar.classList.toggle('active');
+      }
+    }
+
+    function applyCustomFont(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const fontFace = new FontFace('CustomFont', e.target.result);
+          fontFace.load().then(() => {
+            document.fonts.add(fontFace);
+            const canvasElements = document.querySelectorAll('.canvas-element');
+            canvasElements.forEach(el => {
+              el.style.fontFamily = 'CustomFont, Arial, sans-serif';
+            });
+          });
+        };
+        reader.readAsArrayBuffer(file);
+      }
+    }
+
+    window.addEventListener('popstate', updatePageTitle);
+
+    window.addEventListener('load', () => {
+      updatePageTitle();
+
+      document.addEventListener('click', (e) => {
+        const link = e.target.closest('.menu-item, .header-link, .header-menu-item');
+        if (link) {
+          e.preventDefault();
+          const pageKey = link.getAttribute('data-page');
+          if (pageKey) {
+            navigateToPage(pageKey);
+            setTimeout(updatePageTitle, 100);
+          }
+        }
+      });
+
+      const fontInput = document.getElementById('upload-font');
+      if (fontInput) {
+        fontInput.addEventListener('change', applyCustomFont);
+      }
+    });
+  </script>
+</body>
+</html>

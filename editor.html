@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Frontend Editor</title>
+  <base href="https://zahrasangboritoroghi1.github.io/waypoint/">                
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #FFFFFF;
+    }
+    .header {
+      background-color: #552978;
+      color: #FFFFFF;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 22px;
+    }
+    .header-menu-toggle {
+      background: none;
+      border: none;
+      color: #FFFFFF;
+      font-size: 18px;
+      cursor: pointer;
+      padding: 5px 10px;
+    }
+    .header-menu-content {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background-color: #F5F5F5;
+      border: 1px solid #E8E8E8;
+      border-radius: 4px;
+      z-index: 1001;
+      min-width: 150px;
+    }
+    .header-menu-content.active {
+      display: block;
+    }
+    .header-menu-item {
+      display: block;
+      padding: 10px 15px;
+      color: #e4b55b;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .header-menu-item:hover {
+      background-color: #E8E8E8;
+    }
+    .header-link {
+      color: #FFFFFF;
+      margin-left: 20px;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .app {
+      display: flex;
+      min-height: 100vh;
+      margin-top: 60px;
+    }
+    .sider {
+      width: 180px;
+      background-color: #F5F5F5;
+      padding: 40px 20px;
+      height: calc(100vh - 60px);
+      position: fixed;
+      top: 60px;
+      left: 0;
+      transition: transform 0.3s ease;
+    }
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      padding: 10px;
+      position: fixed;
+      top: 65px;
+      left: 10px;
+      z-index: 1001;
+    }
+    .menu-item {
+      display: block;
+      padding: 12px 20px;
+      color: #e4b55b;
+      text-decoration: none;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+    .menu-item.active {
+      background-color: #552978;
+      color: #FFFFFF;
+    }
+    .content {
+      margin-left: 200px;
+      padding: 40px 20px;
+      flex: 1;
+      max-width: 900px;
+      margin-right: auto;
+    }
+    h2, h4 {
+      margin-bottom: 30px;
+      font-size: 24px;
+    }
+    h4 {
+      font-size: 18px;
+    }
+    .ai-tools, .actions {
+      margin-bottom: 40px;
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    .editor {
+      display: flex;
+      gap: 30px;
+    }
+    .elements-sidebar {
+      width: 250px;
+      background-color: #F5F5F5;
+      padding: 30px;
+      border-radius: 8px;
+    }
+    .canvas {
+      flex: 1;
+      background-color: #FFFFFF;
+      border: 1px solid #E8E8E8;
+      border-radius: 8px;
+      padding: 30px;
+      min-height: 400px;
+    }
+    .element {
+      background-color: #F5F5F5;
+      padding: 12px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+      cursor: move;
+      color: #e4b55b;
+      font-size: 14px;
+    }
+    .element.dragging {
+      opacity: 0.5;
+    }
+    .canvas p {
+      text-align: center;
+      color: #888;
+      margin-bottom: 25px;
+      font-size: 14px;
+    }
+    .canvas-element {
+      background-color: #FFFFFF;
+      border: 1px solid #E8E8E8;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+      cursor: move;
+    }
+    .canvas-element.dragging {
+      opacity: 0.5;
+    }
+    .canvas-element:hover {
+      border-color: #e4b55b;
+    }
+    .btn-remove {
+      background-color: #FFFFFF;
+      color: #FF4D4F;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .slider-container {
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+    .slider-container img {
+      width: 100%;
+      display: none;
+    }
+    .slider-container img.active {
+      display: block;
+    }
+    .preview {
+      border: 1px solid #E8E8E8;
+      padding: 30px;
+      border-radius: 8px;
+      margin: 30px auto;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1001;
+    }
+    .modal-content {
+      background-color: #FFFFFF;
+      margin: 10% auto;
+      padding: 40px;
+      border: 1px solid #E8E8E8;
+      width: 90%;
+      max-width: 600px;
+      border-radius: 8px;
+    }
+    .close {
+      color: #aaa;
+      float: left;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .close:hover {
+      color: #000;
+    }
+    #modal-options {
+      margin-top: 25px;
+    }
+    #modal-options label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+    #modal-options select, #modal-options input[type="color"] {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+    @media (min-width: 1025px) {
+      .content {
+        padding: 40px;
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .preview {
+        max-width: 600px;
+      }
+      .editor {
+        flex-direction: row;
+      }
+      .elements-sidebar {
+        width: 250px;
+      }
+    }
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .content {
+        margin-left: 0;
+        padding: 30px;
+        max-width: 100%;
+      }
+      .sider {
+        width: 180px;
+        transform: translateX(-180px);
+        z-index: 1000;
+      }
+      .sider.active {
+        transform: translateX(0);
+      }
+      .menu-toggle {
+        display: block;
+      }
+      .header-menu {
+        display: block;
+      }
+      .preview {
+        max-width: 500px;
+      }
+    }
+    @media (max-width: 768px) {
+      .content {
+        margin-left: 0;
+        padding: 20px;
+        max-width: 100%;
+      }
+      .sider {
+        width: 100%;
+        height: auto;
+        position: fixed;
+        transform: translateX(-100%);
+        z-index: 1000;
+      }
+      .sider.active {
+        transform: translateX(0);
+      }
+      .menu-toggle {
+        display: block;
+      }
+      .header-menu {
+        display: block;
+      }
+      .editor {
+        flex-direction: column;
+      }
+      .elements-sidebar {
+        width: 100%;
+      }
+      .preview {
+        max-width: 100%;
+      }
+      .ai-tools, .actions {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/antd/4.24.14/antd.min.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+  <header class="header">
+    <h1>Frontend Editor</h1>
+    <button class="header-menu-toggle" onclick="toggleHeaderMenu()">☰</button>
+    <div class="header-menu">
+      <div id="header-menu-content" class="header-menu-content">
+        <a data-page="dashboard" class="header-menu-item">Dashboard</a>
+        <a data-page="editor" class="header-menu-item">Frontend Editor</a>
+        <a data-page="gallery" class="header-menu-item">Frontend Generator</a>
+        <a data-page="integrations" class="header-menu-item">Email Integrations</a>
+        <a data-page="settings" class="header-menu-item">Settings</a>
+      </div>
+    </div>
+    <a data-page="profile" class="header-link">Profile</a>
+    <a data-page="index" class="header-link">Logout</a>
+  </header>
+  <div class="app">
+    <aside id="sidebar" class="sider">
+      <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+      <a data-page="dashboard" class="menu-item">Dashboard</a>
+      <a data-page="editor" class="menu-item active">Frontend Editor</a>
+      <a data-page="gallery" class="menu-item">Frontend Generator</a>
+      <a data-page="integrations" class="menu-item">Email Integrations</a>
+      <a data-page="settings" class="menu-item">Settings</a>
+    </aside>
+    <main class="content">
+      <h2>Frontend Editor</h2>
+      <div class="ai-tools">
+        <button class="ant-btn ant-btn-primary" onclick="showAIGenerateModal()">Smart Frontend Generation</button>
+        <button class="ant-btn ant-btn-primary" onclick="showAIContentModal()">Content Suggestions</button>
+        <button class="ant-btn ant-btn-primary" onclick="showAISpamAnalysisModal()">Spam Analysis</button>
+        <button class="ant-btn ant-btn-primary" onclick="showAIImageEditModal()">Advanced Image Editing</button>
+        <button class="ant-btn ant-btn-primary" onclick="showAIBrandingModal()">Smart Branding</button>
+        <button class="ant-btn ant-btn-primary" onclick="showAILayoutModal()">Layout Suggestions</button>
+      </div>
+      <div class="editor">
+        <aside class="elements-sidebar">
+          <h4>Elements</h4>
+          <div class="element" draggable="true" id="text" ondragstart="drag(event)">Text</div>
+          <div class="element" draggable="true" id="button" ondragstart="drag(event)">Button</div>
+          <div class="element" draggable="true" id="image" ondragstart="drag(event)">Image</div>
+          <div class="element" draggable="true" id="table" ondragstart="drag(event)">Table</div>
+          <div class="element" draggable="true" id="social" ondragstart="drag(event)">Sidebar Icon</div>
+          <div class="element" draggable="true" id="divider" ondragstart="drag(event)">Divider</div>
+          <div class="element" draggable="true" id="video" ondragstart="drag(event)">Video</div>
+          <div class="element" draggable="true" id="slider" ondragstart="drag(event)">Image Slider</div>
+        </aside>
+        <div class="canvas" ondrop="drop(event)" ondragover="allowDrop(event)" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)">
+          <p id="drag-here">Drag elements here</p>
+          <div id="canvas-content"></div>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="ant-btn ant-btn-primary" onclick="saveCanvas()">Save</button>
+        <button class="ant-btn ant-btn-primary" onclick="exportHTML()">Export HTML</button>
+        <select id="preview-mode" onchange="updatePreview()">
+          <option value="desktop">Desktop</option>
+          <option value="tablet">Tablet</option>
+          <option value="mobile">Mobile</option>
+          <option value="gmail">Email</option>
+        </select>
+        <button class="ant-btn ant-btn-primary" onclick="showMultiPreviewModal()">Multi-Device Preview</button>
+      </div>
+      <div id="preview-section" class="preview">
+        <h4>Preview</h4>
+        <div id="preview-content"></div>
+      </div>
+      <div id="modal" class="modal">
+        <div class="modal-content">
+          <span class="close" onclick="closeModal()">×</span>
+          <h4 id="modal-title"></h4>
+          <div id="modal-body"></div>
+          <div id="modal-options">
+            <button class="ant-btn ant-btn-primary" onclick="handleModalAction()">Confirm</button>
+          </div>
+          <input id="modal-input" style="display: none;" />
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/antd/4.24.14/antd.min.js"></script>
+  <script>
+    const pageRoutes = {
+      index: 'index.html',
+      dashboard: 'dashboard.html',
+      editor: 'editor.html',
+      gallery: 'gallery.html',
+      integrations: 'integrations.html',
+      settings: 'settings.html',
+      profile: 'profile.html'
+    };
+
+    function navigateToPage(pageKey) {
+      const path = pageRoutes[pageKey];
+      if (path) {
+        window.location.href = path;
+      } else {
+        console.error(`Page ${pageKey} not found in pageRoutes`);
+      }
+    }
+
+    function updatePageTitle() {
+      const currentPath = window.location.pathname;
+      const currentPage = currentPath.split('/').pop() || 'dashboard.html';
+
+      const translations = {
+        'page-title': {
+          'index.html': 'Login/Signup',
+          'dashboard.html': 'Dashboard',
+          'editor.html': 'Frontend Editor',
+          'gallery.html': 'Frontend Generator',
+          'integrations.html': 'Email Integrations',
+          'settings.html': 'Settings',
+          'profile.html': 'Profile',
+        },
+        'dashboard-title': 'Dashboard',
+        'editor-title': 'Frontend Editor',
+        'gallery-title': 'Frontend Generator',
+        'integrations-title': 'Email Integrations',
+        'settings-title': 'Settings',
+        'profile-title': 'Profile',
+        'dashboard-menu': 'Dashboard',
+        'editor-menu': 'Frontend Editor',
+        'gallery-menu': 'Frontend Generator',
+        'integrations-menu': 'Email Integrations',
+        'settings-menu': 'Settings',
+        'profile-link': 'Profile',
+        'logout-link': 'Logout',
+        'elements-title': 'Elements',
+        'drag-here': 'Drag elements here',
+        'preview-title': 'Preview',
+        'generate-frontend-btn': 'Smart Frontend Generation',
+        'suggest-content-btn': 'Content Suggestions',
+        'spam-analysis-btn': 'Spam Analysis',
+        'image-edit-btn': 'Advanced Image Editing',
+        'branding-btn': 'Smart Branding',
+        'layout-btn': 'Layout Suggestions',
+        'save-btn': 'Save',
+        'export-html-btn': 'Export HTML',
+        'preview-mode-desktop': 'Desktop',
+        'preview-mode-tablet': 'Tablet',
+        'preview-mode-mobile': 'Mobile',
+        'preview-mode-gmail': 'Email',
+        'multi-preview-btn': 'Multi-Device Preview',
+        'header-menu-dashboard': 'Dashboard',
+        'header-menu-editor': 'Frontend Editor',
+        'header-menu-gallery': 'Frontend Generator',
+        'header-menu-integrations': 'Email Integrations',
+        'header-menu-settings': 'Settings'
+      };
+
+      const pageTitle = translations['page-title'][currentPage] || 'Frontend Editor';
+      const pageTitleElement = document.getElementById('page-title');
+      if (pageTitleElement) {
+        pageTitleElement.textContent = pageTitle;
+      }
+
+      const elements = document.querySelectorAll('[id]');
+      elements.forEach(el => {
+        const id = el.id;
+        if (translations[id]) {
+          el.textContent = translations[id];
+        }
+      });
+
+      const headerMenuItems = document.querySelectorAll('.header-menu-item');
+      headerMenuItems.forEach(item => {
+        const pageKey = item.getAttribute('data-page');
+        if (pageKey) {
+          const menuId = `header-menu-${pageKey}`;
+          item.textContent = translations[menuId] || item.textContent;
+        }
+      });
+
+      const previewMode = document.getElementById('preview-mode');
+      if (previewMode) {
+        previewMode.innerHTML = `
+          <option value="desktop">${translations['preview-mode-desktop']}</option>
+          <option value="tablet">${translations['preview-mode-tablet']}</option>
+          <option value="mobile">${translations['preview-mode-mobile']}</option>
+          <option value="gmail">${translations['preview-mode-gmail']}</option>
+        `;
+      }
+    }
+
+    function toggleHeaderMenu() {
+      const headerMenuContent = document.getElementById('header-menu-content');
+      if (headerMenuContent) {
+        headerMenuContent.classList.toggle('active');
+      }
+    }
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      if (sidebar) {
+        sidebar.classList.toggle('active');
+      }
+    }
+
+    function allowDrop(ev) {
+      ev.preventDefault();
+    }
+
+    function dragEnter(ev) {
+      ev.preventDefault();
+      ev.currentTarget.classList.add('drag-over');
+    }
+
+    function dragLeave(ev) {
+      ev.currentTarget.classList.remove('drag-over');
+    }
+
+    function drag(ev) {
+      ev.dataTransfer.setData("text", ev.target.id || ev.target.closest('.canvas-element').id);
+      ev.target.classList.add('dragging');
+    }
+
+    function drop(ev) {
+      ev.preventDefault();
+      const canvas = ev.currentTarget;
+      const canvasContent = document.getElementById('canvas-content');
+      const dragHere = document.getElementById('drag-here');
+      if (!canvasContent || !dragHere) return;
+
+      const data = ev.dataTransfer.getData("text");
+      const draggedElement = document.getElementById(data);
+      let element;
+
+      if (draggedElement && draggedElement.classList.contains('canvas-element')) {
+        // Reordering existing canvas element
+        const rect = canvasContent.getBoundingClientRect();
+        const y = ev.clientY - rect.top;
+        let insertBeforeElement = null;
+
+        const children = Array.from(canvasContent.children).filter(child => child !== dragHere);
+        for (const child of children) {
+          const childRect = child.getBoundingClientRect();
+          const childY = childRect.top + childRect.height / 2 - rect.top;
+          if (y < childY && child !== draggedElement) {
+            insertBeforeElement = child;
+            break;
+          }
+        }
+
+        if (insertBeforeElement) {
+          canvasContent.insertBefore(draggedElement, insertBeforeElement);
+        } else {
+          canvasContent.appendChild(draggedElement);
+        }
+      } else {
+        // Adding new element from sidebar
+        element = document.createElement('div');
+        element.className = 'canvas-element';
+        element.draggable = true;
+        element.id = `canvas-element-${Date.now()}`; // Unique ID for reordering
+        element.ondragstart = drag;
+        element.ondragend = () => element.classList.remove('dragging');
+
+        if (data === 'slider') {
+          element.innerHTML = `
+            <div class="slider-container">
+              <img src="https://via.placeholder.com/600x200?text=Slide+1" class="active">
+              <img src="https://via.placeholder.com/600x200?text=Slide+2">
+              <img src="https://via.placeholder.com/600x200?text=Slide+3">
+            </div>
+            <button class="btn-remove" onclick="this.parentElement.remove(); updatePreviewContent();">Remove</button>
+          `;
+          setInterval(() => {
+            const slides = element.querySelectorAll('img');
+            let activeIndex = 0;
+            slides.forEach((slide, index) => {
+              if (slide.classList.contains('active')) activeIndex = index;
+              slide.classList.remove('active');
+            });
+            slides[(activeIndex + 1) % slides.length].classList.add('active');
+          }, 3000);
+        } else {
+          const sourceElement = document.getElementById(data);
+          if (sourceElement) {
+            element.innerHTML = sourceElement.textContent + `<button class="btn-remove" onclick="this.parentElement.remove(); updatePreviewContent();">Remove</button>`;
+          }
+        }
+
+        canvasContent.appendChild(element);
+        dragHere.style.display = 'none';
+      }
+
+      canvas.classList.remove('drag-over');
+      updatePreviewContent();
+    }
+
+    function updatePreview() {
+      const previewMode = document.getElementById('preview-mode');
+      const previewSection = document.getElementById('preview-section');
+      if (previewMode && previewSection) {
+        const mode = previewMode.value;
+        previewSection.style.maxWidth = mode === 'mobile' ? '375px' : mode === 'tablet' ? '500px' : mode === 'gmail' ? '600px' : '600px';
+        if (mode === 'gmail') {
+          previewSection.style.fontFamily = 'Arial, sans-serif';
+          previewSection.style.padding = '10px';
+          previewSection.style.backgroundColor = '#F5F5F5';
+        }
+        updatePreviewContent();
+      }
+    }
+
+    function updatePreviewContent() {
+      const canvasContent = document.getElementById('canvas-content');
+      const previewContent = document.getElementById('preview-content');
+      if (canvasContent && previewContent) {
+        previewContent.innerHTML = canvasContent.innerHTML;
+        const dragHere = document.getElementById('drag-here');
+        if (dragHere) {
+          dragHere.style.display = canvasContent.children.length <= 1 ? 'block' : 'none';
+        }
+      }
+    }
+
+    function saveCanvas() {
+      const canvasContent = document.getElementById('canvas-content');
+      if (canvasContent) {
+        localStorage.setItem('savedFrontend', canvasContent.innerHTML);
+        alert('Frontend saved!');
+      }
+    }
+
+    function exportHTML() {
+      const canvasContent = document.getElementById('canvas-content');
+      if (canvasContent) {
+        const html = `
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Email Frontend</title>
+            <style>
+              body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+              .canvas-element { border: 1px solid #E8E8E8; padding: 15px; margin-bottom: 20px; }
+              .slider-container img { width: 100%; }
+            </style>
+          </head>
+          <body>
+            ${canvasContent.innerHTML}
+          </body>
+          </html>
+        `;
+        const blob = new Blob([html], { type: 'text/html' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'frontend.html';
+        link.click();
+      }
+    }
+
+    function showModal(title, content) {
+      const modalTitle = document.getElementById('modal-title');
+      const modalBody = document.getElementById('modal-body');
+      const modalOptions = document.getElementById('modal-options');
+      const modalInput = document.getElementById('modal-input');
+      const modal = document.getElementById('modal');
+      if (modalTitle && modalBody && modalOptions && modalInput && modal) {
+        modalTitle.textContent = title;
+        modalBody.textContent = content;
+        modalOptions.style.display = 'none';
+        modalInput.style.display = title.includes('Enter campaign') ? 'block' : 'none';
+        modal.style.display = 'block';
+      }
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('modal');
+      if (modal) {
+        modal.style.display = 'none';
+      }
+    }
+
+    function showAIGenerateModal() {
+      const modalTitle = document.getElementById('modal-title');
+      const modalBody = document.getElementById('modal-body');
+      const modalOptions = document.getElementById('modal-options');
+      const modalInput = document.getElementById('modal-input');
+      const modal = document.getElementById('modal');
+      if (modalTitle && modalBody && modalOptions && modalInput && modal) {
+        modalTitle.textContent = 'Smart Frontend Generation';
+        modalBody.innerHTML = `
+          <label>Campaign Goal:</label>
+          <select id="campaign-goal">
+            <option value="sales">Sales</option>
+            <option value="welcome">Welcome</option>
+            <option value="event">Event</option>
+          </select>
+        `;
+        modalOptions.style.display = 'block';
+        modalInput.style.display = 'none';
+        modal.style.display = 'block';
+      }
+    }
+
+    function showAIContentModal() {
+      const modalTitle = document.getElementById('modal-title');
+      const modalBody = document.getElementById('modal-body');
+      const modalOptions = document.getElementById('modal-options');
+      const modalInput = document.getElementById('modal-input');
+      const modal = document.getElementById('modal');
+      if (modalTitle && modalBody && modalOptions && modalInput && modal) {
+        modalTitle.textContent = 'Content Suggestions';
+        modalBody.innerHTML = `
+          <label>Content Type:</label>
+          <select id="content-type">
+            <option value="header">Header</option>
+            <option value="body">Body</option>
+            <option value="cta">CTA</option>
+          </select>
+          <label>Tone:</label>
+          <select id="content-tone">
+            <option value="formal">Formal</option>
+            <option value="friendly">Friendly</option>
+          </select>
+          <label>Grammar Check:</label>
+          <input type="checkbox" id="grammar-check">
+        `;
+        modalOptions.style.display = 'block';
+        modalInput.style.display = 'none';
+        modal.style.display = 'block';
+      }
+    }
+
+    function showAISpamAnalysisModal() {
+      const modalTitle = document.getElementById('modal-title');
+      const modalBody = document.getElementById('modal-body');
+      const modalOptions = document.getElementById('modal-options');
+      const modalInput = document.getElementById('modal-input');
+      const modal = document.getElementById('modal');
+      if (modalTitle && modalBody && modalOptions && modalInput && modal) {
+        modalTitle.textContent = 'Spam Analysis';
+        modalBody.innerHTML = `
+          <p>Spam Score: 3/10</p>
+          <p>Improvement Tips:</p>
+          <ul>
+            <li>Reduce the number of links</li>
+            <li>Use fewer spammy words</li>
+            <li>Shorten email length</li>
+          </ul>
+        `;
+        modalOptions.style.display = 'none';
+        modalInput.style.display = 'none';
+        modal.style.display = 'block';
+      }
+    }
+
+    function showAIImageEditModal() {
+      const modalTitle = document.getElementById('modal-title');
+      const modalBody = document.getElementById('modal-body');
+      const modalOptions = document.getElementById('modal-options');
+      const modalInput = document.getElementById('modal-input');
+      const modal = document.getElementById('modal');
+      if (modalTitle && modalBody && modalOptions && modalInput && modal) {
+        modalTitle.textContent = 'Advanced Image Editing';
+        modalBody.innerHTML = `
+          <label>Upload Image:</label>
+          <input type="file" id="image-upload">
+          <label>Action:</label>
+          <select id="image-action">
+            <option value="crop">Crop</option>
+            <option value="filter">Filter</option>
+            <option value="add-text">Add Text</option>
+            <option value="remove-bg">Remove Background</option>
+          </select>
+        `;
+        modalOptions.style.display = 'block';
+        modalInput.style.display = 'none';
+        modal.style.display = 'block';
+      }
+    }
+
+    function showAIBrandingModal() {
+      const modalTitle = document.getElementById('modal-title');
+      const modalBody = document.getElementById('modal-body');
+      const modalOptions = document.getElementById('modal-options');
+      const modalInput = document.getElementById('modal-input');
+      const modal = document.getElementById('modal');
+      if (modalTitle && modalBody && modalOptions && modalInput && modal) {
+        modalTitle.textContent = 'Smart Branding';
+        modalBody.innerHTML = `
+          <label>Suggested Color Palette:</label>
+          <input type="color" value="#552978">
+          <input type="color" value="#e4b55b">
+          <label>Suggested Font:</label>
+          <select id="font-select">
+            <option>Arial</option>
+            <option>Helvetica</option>
+          </select>
+          <p>Preview:</p>
+          <div style="background-color: #552978; color: #FFFFFF; padding: 10px;">Sample Text</div>
+        `;
+        modalOptions.style.display = 'block';
+        modalInput.style.display = 'none';
+        modal.style.display = 'block';
+      }
+    }
+
+    function showAILayoutModal() {
+      const modalTitle = document.getElementById('modal-title');
+      const modalBody = document.getElementById('modal-body');
+      const modalOptions = document.getElementById('modal-options');
+      const modalInput = document.getElementById('modal-input');
+      const modal = document.getElementById('modal');
+      if (modalTitle && modalBody && modalOptions && modalInput && modal) {
+        modalTitle.textContent = 'Layout Suggestions';
+        modalBody.innerHTML = `
+          <label>Email Type:</label>
+          <select id="email-type">
+            <option value="promotional">Promotional</option>
+            <option value="welcome">Welcome</option>
+            <option value="newsletter">Newsletter</option>
+          </select>
+          <p>Suggested Layout:</p>
+          <ul>
+            <li>Place CTA at the top</li>
+            <li>Add hero image below CTA</li>
+            <li>Include text content at the bottom</li>
+          </ul>
+        `;
+        modalOptions.style.display = 'block';
+        modalInput.style.display = 'none';
+        modal.style.display = 'block';
+      }
+    }
+
+    function showMultiPreviewModal() {
+      const modalTitle = document.getElementById('modal-title');
+      const modalBody = document.getElementById('modal-body');
+      const modalOptions = document.getElementById('modal-options');
+      const modalInput = document.getElementById('modal-input');
+      const modal = document.getElementById('modal');
+      const canvasContent = document.getElementById('canvas-content');
+      if (modalTitle && modalBody && modalOptions && modalInput && modal && canvasContent) {
+        modalTitle.textContent = 'Multi-Device Preview';
+        modalBody.innerHTML = `
+          <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+            <div style="width: 600px; border: 1px solid #E8E8E8; padding: 10px;">
+              <h4>Desktop</h4>
+              <div id="preview-desktop">${canvasContent.innerHTML}</div>
+            </div>
+            <div style="width: 500px; border: 1px solid #E8E8E8; padding: 10px;">
+              <h4>Tablet</h4>
+              <div id="preview-tablet">${canvasContent.innerHTML}</div>
+            </div>
+            <div style="width: 375px; border: 1px solid #E8E8E8; padding: 10px;">
+              <h4>Mobile</h4>
+              <div id="preview-mobile">${canvasContent.innerHTML}</div>
+            </div>
+            <div style="width: 600px; border: 1px solid #E8E8E8; padding: 10px;">
+              <h4>Email</h4>
+              <div id="preview-gmail">${canvasContent.innerHTML}</div>
+            </div>
+          </div>
+        `;
+        modalOptions.style.display = 'none';
+        modalInput.style.display = 'none';
+        modal.style.display = 'block';
+      }
+    }
+
+    function handleModalAction() {
+      const title = document.getElementById('modal-title')?.textContent;
+      const canvasContent = document.getElementById('canvas-content');
+      if (!title || !canvasContent) return;
+
+      const element = document.createElement('div');
+      element.className = 'canvas-element';
+      element.draggable = true;
+      element.id = `canvas-element-${Date.now()}`; // Unique ID for reordering
+      element.ondragstart = drag;
+      element.ondragend = () => element.classList.remove('dragging');
+
+      if (title.includes('Smart Frontend Generation')) {
+        const goal = document.getElementById('campaign-goal')?.value;
+        if (goal) {
+          element.innerHTML = `Suggested Element: ${
+            goal === 'sales' ? 'Sales Button' :
+            goal === 'welcome' ? 'Welcome Text' :
+            'Event Invitation'
+          }<button class="btn-remove" onclick="this.parentElement.remove(); updatePreviewContent();">Remove</button>`;
+        }
+      } else if (title.includes('Content Suggestions')) {
+        const type = document.getElementById('content-type')?.value;
+        const tone = document.getElementById('content-tone')?.value;
+        if (type && tone) {
+          element.innerHTML = `Suggested Content: ${
+            type === 'header' ? 'Catchy Header' :
+            type === 'body' ? 'Body Text' :
+            'Call to Action'
+          } (${tone})<button class="btn-remove" onclick="this.parentElement.remove(); updatePreviewContent();">Remove</button>`;
+        }
+      } else if (title.includes('Advanced Image Editing')) {
+        const action = document.getElementById('image-action')?.value;
+        if (action) {
+          element.innerHTML = `Image (${action})<button class="btn-remove" onclick="this.parentElement.remove(); updatePreviewContent();">Remove</button>`;
+        }
+      } else if (title.includes('Smart Branding')) {
+        const font = document.getElementById('font-select')?.value;
+        if (font) {
+          element.style.fontFamily = font;
+          element.innerHTML = `Branded Text (Font: ${font})<button class="btn-remove" onclick="this.parentElement.remove(); updatePreviewContent();">Remove</button>`;
+        }
+      } else if (title.includes('Layout Suggestions')) {
+        const type = document.getElementById('email-type')?.value;
+        if (type) {
+          element.innerHTML = `Layout: ${type} (CTA at top)<button class="btn-remove" onclick="this.parentElement.remove(); updatePreviewContent();">Remove</button>`;
+        }
+      }
+
+      canvasContent.appendChild(element);
+      const dragHere = document.getElementById('drag-here');
+      if (dragHere) {
+        dragHere.style.display = 'none';
+      }
+      updatePreviewContent();
+      closeModal();
+    }
+
+    window.addEventListener('popstate', updatePageTitle);
+
+    window.addEventListener('load', () => {
+      updatePageTitle();
+      if (document.getElementById('preview-mode')) {
+        updatePreview();
+      }
+
+      document.addEventListener('click', (e) => {
+        const link = e.target.closest('.menu-item, .header-link, .header-menu-item');
+        if (link) {
+          e.preventDefault();
+          const pageKey = link.getAttribute('data-page');
+          if (pageKey) {
+            navigateToPage(pageKey);
+            setTimeout(updatePageTitle, 100);
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

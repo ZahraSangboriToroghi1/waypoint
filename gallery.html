@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Frontend Generator</title>
+  <base href="https://zahrasangboritoroghi1.github.io/waypoint/">              
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #FFFFFF;
+    }
+    .header {
+      background-color: #552978;
+      color: #FFFFFF;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 22px;
+    }
+    .header-menu-toggle {
+      background: none;
+      border: none;
+      color: #FFFFFF;
+      font-size: 18px;
+      cursor: pointer;
+      padding: 5px 10px;
+    }
+    .header-menu-content {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background-color: #F5F5F5;
+      border: 1px solid #E8E8E8;
+      border-radius: 4px;
+      z-index: 1001;
+      min-width: 150px;
+    }
+    .header-menu-content.active {
+      display: block;
+    }
+    .header-menu-item {
+      display: block;
+      padding: 10px 15px;
+      color: #e4b55b;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .header-menu-item:hover {
+      background-color: #E8E8E8;
+    }
+    .header-link {
+      color: #FFFFFF;
+      margin-left: 20px;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .app {
+      display: flex;
+      min-height: 100vh;
+      margin-top: 60px;
+    }
+    .sider {
+      width: 180px;
+      background-color: #F5F5F5;
+      padding: 40px 20px;
+      height: calc(100vh - 60px);
+      position: fixed;
+      top: 60px;
+      left: 0;
+      transition: transform 0.3s ease;
+    }
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      padding: 10px;
+      position: fixed;
+      top: 65px;
+      left: 10px;
+      z-index: 1001;
+    }
+    .menu-item {
+      display: block;
+      padding: 12px 20px;
+      color: #e4b55b;
+      text-decoration: none;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+    .menu-item.active {
+      background-color: #552978;
+      color: #FFFFFF;
+    }
+    .content {
+      margin-left: 200px;
+      padding: 40px 20px;
+      flex: 1;
+      max-width: 900px;
+      margin-right: auto;
+    }
+    h2, h4 {
+      margin-bottom: 30px;
+      font-size: 24px;
+    }
+    h4 {
+      font-size: 18px;
+    }
+    .filters {
+      margin-bottom: 40px;
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    .filters input, .filters select {
+      padding: 8px;
+      font-size: 14px;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+    .card {
+      border: 1px solid #E8E8E8;
+      border-radius: 8px;
+      padding: 30px;
+    }
+    .card:hover {
+      border-color: #e4b55b;
+    }
+    .card p {
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1001;
+    }
+    .modal-content {
+      background-color: #FFFFFF;
+      margin: 10% auto;
+      padding: 40px;
+      border: 1px solid #E8E8E8;
+      width: 90%;
+      max-width: 600px;
+      border-radius: 8px;
+    }
+    .close {
+      color: #aaa;
+      float: left;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .close:hover {
+      color: #000;
+    }
+    #modal-options {
+      margin-top: 25px;
+    }
+    @media (min-width: 1025px) {
+      .content {
+        padding: 40px;
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .content {
+        margin-left: 0;
+        padding: 30px;
+        max-width: 100%;
+      }
+      .sider {
+        width: 180px;
+        transform: translateX(-180px);
+        z-index: 1000;
+      }
+      .sider.active {
+        transform: translateX(0);
+      }
+      .menu-toggle {
+        display: block;
+      }
+      .header-menu {
+        display: block;
+      }
+    }
+    @media (max-width: 768px) {
+      .content {
+        margin-left: 0;
+        padding: 20px;
+        max-width: 100%;
+      }
+      .sider {
+        width: 100%;
+        height: auto;
+        position: fixed;
+        transform: translateX(-100%);
+        z-index: 1000;
+      }
+      .sider.active {
+        transform: translateX(0);
+      }
+      .menu-toggle {
+        display: block;
+      }
+      .header-menu {
+        display: block;
+      }
+      .filters {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/antd/4.24.14/antd.min.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+  <header class="header">
+    <h1>Frontend Generator</h1>
+    <button class="header-menu-toggle" onclick="toggleHeaderMenu()">☰</button>
+    <div class="header-menu">
+      <div id="header-menu-content" class="header-menu-content">
+        <a data-page="dashboard" class="header-menu-item">Dashboard</a>
+        <a data-page="editor" class="header-menu-item">Frontend Editor</a>
+        <a data-page="gallery" class="header-menu-item">Frontend Generator</a>
+        <a data-page="integrations" class="header-menu-item">Email Integrations</a>
+        <a data-page="settings" class="header-menu-item">Settings</a>
+      </div>
+    </div>
+    <a data-page="profile" class="header-link">Profile</a>
+    <a data-page="index" class="header-link">Logout</a>
+  </header>
+  <div class="app">
+    <aside id="sidebar" class="sider">
+      <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+      <a data-page="dashboard" class="menu-item">Dashboard</a>
+      <a data-page="editor" class="menu-item">Frontend Editor</a>
+      <a data-page="gallery" class="menu-item active">Frontend Generator</a>
+      <a data-page="integrations" class="menu-item">Email Integrations</a>
+      <a data-page="settings" class="menu-item">Settings</a>
+    </aside>
+    <main class="content">
+      <h2>Frontend Generator</h2>
+      <div class="filters">
+        <input type="text" id="search-frontend" placeholder="Search frontends..." oninput="filterFrontends()">
+        <select id="category-filter" onchange="filterFrontends()">
+          <option value="all">All</option>
+          <option value="promotional">Promotional</option>
+          <option value="onboarding">Onboarding</option>
+          <option value="newsletter">Newsletter</option>
+          <option value="event">Event</option>
+          <option value="transactional">Transactional</option>
+        </select>
+        <select id="sort-filter" onchange="filterFrontends()">
+          <option value="newest">Newest</option>
+          <option value="popular">Popular</option>
+          <option value="alphabetical">Alphabetical</option>
+        </select>
+      </div>
+      <div class="gallery">
+        <div class="card">
+          <h4>Sales Email</h4>
+          <p>Promotional email frontend</p>
+          <button class="ant-btn ant-btn-primary" onclick="showPreviewModal('Sales Email', 'Promotional email frontend')">Preview</button>
+          <button class="ant-btn ant-btn-primary" onclick="editFrontend('sales')">Select Frontend</button>
+        </div>
+        <div class="card">
+          <h4>Welcome Email</h4>
+          <p>Onboarding email frontend</p>
+          <button class="ant-btn ant-btn-primary" onclick="showPreviewModal('Welcome Email', 'Onboarding email frontend')">Preview</button>
+          <button class="ant-btn ant-btn-primary" onclick="editFrontend('welcome')">Select Frontend</button>
+        </div>
+        <div class="card">
+          <h4>Newsletter</h4>
+          <p>Monthly update frontend</p>
+          <button class="ant-btn ant-btn-primary" onclick="showPreviewModal('Newsletter', 'Monthly update frontend')">Preview</button>
+          <button class="ant-btn ant-btn-primary" onclick="editFrontend('newsletter')">Select Frontend</button>
+        </div>
+        <div class="card">
+          <h4>Event Invite</h4>
+          <p>Event invitation frontend</p>
+          <button class="ant-btn ant-btn-primary" onclick="showPreviewModal('Event Invite', 'Event invitation frontend')">Preview</button>
+          <button class="ant-btn ant-btn-primary" onclick="editFrontend('event')">Select Frontend</button>
+        </div>
+      </div>
+      <div id="modal" class="modal">
+        <div class="modal-content">
+          <span class="close" onclick="closeModal()">×</span>
+          <h4 id="modal-title"></h4>
+          <div id="modal-body"></div>
+          <div id="modal-options">
+            <button class="ant-btn ant-btn-primary" onclick="editFrontend(document.getElementById('modal-title').textContent.toLowerCase().replace(' ', '-'))">Select and Edit</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/antd/4.24.14/antd.min.js"></script>
+  <script>
+    const pageRoutes = {
+      index: 'index.html',
+      dashboard: 'dashboard.html',
+      editor: 'editor.html',
+      gallery: 'gallery.html',
+      integrations: 'integrations.html',
+      settings: 'settings.html',
+      profile: 'profile.html'
+    };
+
+    function navigateToPage(pageKey) {
+      const path = pageRoutes[pageKey];
+      if (path) {
+        window.location.href = path;
+      } else {
+        console.error(`Page ${pageKey} not found in pageRoutes`);
+      }
+    }
+
+    function updatePageTitle() {
+      const currentPath = window.location.pathname;
+      const currentPage = currentPath.split('/').pop() || 'dashboard.html';
+
+      const translations = {
+        'page-title': {
+          'index.html': 'Login/Signup',
+          'dashboard.html': 'Dashboard',
+          'editor.html': 'Frontend Editor',
+          'gallery.html': 'Frontend Generator',
+          'integrations.html': 'Email Integrations',
+          'settings.html': 'Settings',
+          'profile.html': 'Profile',
+        },
+        'dashboard-title': 'Dashboard',
+        'editor-title': 'Frontend Editor',
+        'gallery-title': 'Frontend Generator',
+        'integrations-title': 'Email Integrations',
+        'settings-title': 'Settings',
+        'profile-title': 'Profile',
+        'dashboard-menu': 'Dashboard',
+        'editor-menu': 'Frontend Editor',
+        'gallery-menu': 'Frontend Generator',
+        'integrations-menu': 'Email Integrations',
+        'settings-menu': 'Settings',
+        'profile-link': 'Profile',
+        'logout-link': 'Logout',
+        'search-frontend': 'Search frontends...',
+        'category-filter-all': 'All',
+        'category-filter-promotional': 'Promotional',
+        'category-filter-onboarding': 'Onboarding',
+        'category-filter-newsletter': 'Newsletter',
+        'category-filter-event': 'Event',
+        'category-filter-transactional': 'Transactional',
+        'sort-filter-newest': 'Newest',
+        'sort-filter-popular': 'Popular',
+        'sort-filter-alphabetical': 'Alphabetical',
+        'select-frontend-btn': 'Select Frontend',
+        'header-menu-dashboard': 'Dashboard',
+        'header-menu-editor': 'Frontend Editor',
+        'header-menu-gallery': 'Frontend Generator',
+        'header-menu-integrations': 'Email Integrations',
+        'header-menu-settings': 'Settings'
+      };
+
+      const pageTitle = translations['page-title'][currentPage] || 'Frontend Generator';
+      const pageTitleElement = document.getElementById('page-title');
+      if (pageTitleElement) {
+        pageTitleElement.textContent = pageTitle;
+      }
+
+      const elements = document.querySelectorAll('[id]');
+      elements.forEach(el => {
+        const id = el.id;
+        if (translations[id]) {
+          el.textContent = translations[id];
+        }
+        if (id === 'search-frontend') {
+          el.placeholder = translations[id];
+        }
+      });
+
+      const headerMenuItems = document.querySelectorAll('.header-menu-item');
+      headerMenuItems.forEach(item => {
+        const pageKey = item.getAttribute('data-page');
+        if (pageKey) {
+          const menuId = `header-menu-${pageKey}`;
+          item.textContent = translations[menuId] || item.textContent;
+        }
+      });
+
+      const categoryFilter = document.getElementById('category-filter');
+      if (categoryFilter) {
+        categoryFilter.innerHTML = `
+          <option value="all">${translations['category-filter-all']}</option>
+          <option value="promotional">${translations['category-filter-promotional']}</option>
+          <option value="onboarding">${translations['category-filter-onboarding']}</option>
+          <option value="newsletter">${translations['category-filter-newsletter']}</option>
+          <option value="event">${translations['category-filter-event']}</option>
+          <option value="transactional">${translations['category-filter-transactional']}</option>
+        `;
+      }
+
+      const sortFilter = document.getElementById('sort-filter');
+      if (sortFilter) {
+        sortFilter.innerHTML = `
+          <option value="newest">${translations['sort-filter-newest']}</option>
+          <option value="popular">${translations['sort-filter-popular']}</option>
+          <option value="alphabetical">${translations['sort-filter-alphabetical']}</option>
+        `;
+      }
+    }
+
+    function toggleHeaderMenu() {
+      const headerMenuContent = document.getElementById('header-menu-content');
+      if (headerMenuContent) {
+        headerMenuContent.classList.toggle('active');
+      }
+    }
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      if (sidebar) {
+        sidebar.classList.toggle('active');
+      }
+    }
+
+    function filterFrontends() {
+      const searchInput = document.getElementById('search-frontend');
+      const categoryFilter = document.getElementById('category-filter');
+      const sortFilter = document.getElementById('sort-filter');
+      const cards = document.querySelectorAll('.gallery .card');
+      if (!searchInput || !categoryFilter || !sortFilter) return;
+
+      const search = searchInput.value.toLowerCase();
+      const category = categoryFilter.value;
+      const sort = sortFilter.value;
+
+      let filteredCards = Array.from(cards).filter(card => {
+        const title = card.querySelector('h4')?.textContent.toLowerCase() || '';
+        return (category === 'all' || title.includes(category)) && title.includes(search);
+      });
+
+      if (sort === 'alphabetical') {
+        filteredCards.sort((a, b) => a.querySelector('h4')?.textContent.localeCompare(b.querySelector('h4')?.textContent || '') || 0);
+      } else if (sort === 'popular') {
+        filteredCards.sort((a, b) => b.querySelector('h4')?.textContent.length - a.querySelector('h4')?.textContent.length || 0);
+      }
+
+      cards.forEach(card => card.style.display = 'none');
+      filteredCards.forEach(card => card.style.display = 'block');
+    }
+
+    function showPreviewModal(title, content) {
+      const modalTitle = document.getElementById('modal-title');
+      const modalBody = document.getElementById('modal-body');
+      const modalOptions = document.getElementById('modal-options');
+      const modal = document.getElementById('modal');
+      if (modalTitle && modalBody && modalOptions && modal) {
+        modalTitle.textContent = title;
+        modalBody.textContent = content;
+        modalOptions.style.display = 'block';
+        modal.style.display = 'block';
+      }
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('modal');
+      if (modal) {
+        modal.style.display = 'none';
+      }
+    }
+
+    function editFrontend(frontendId) {
+      localStorage.setItem('selectedFrontend', frontendId);
+      navigateToPage('editor');
+    }
+
+    window.addEventListener('popstate', updatePageTitle);
+
+    window.addEventListener('load', () => {
+      updatePageTitle();
+
+      document.addEventListener('click', (e) => {
+        const link = e.target.closest('.menu-item, .header-link, .header-menu-item');
+        if (link) {
+          e.preventDefault();
+          const pageKey = link.getAttribute('data-page');
+          if (pageKey) {
+            navigateToPage(pageKey);
+            setTimeout(updatePageTitle, 100);
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
